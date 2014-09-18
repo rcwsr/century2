@@ -40,6 +40,13 @@ class Ride
     private $distance;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Century\CenturyBundle\Entity\User", inversedBy="rides")
+     */
+    private $user;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -116,5 +123,28 @@ class Ride
     public function getDistance()
     {
         return $this->distance;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Century\CenturyBundle\Entity\User $user
+     * @return Ride
+     */
+    public function setUser(\Century\CenturyBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Century\CenturyBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

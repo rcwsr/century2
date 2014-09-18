@@ -32,9 +32,17 @@ class User extends BaseUser
      */
     private $points;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Century\CenturyBundle\Entity\Ride", mappedBy="user")
+     */
     private $rides;
 
-    private $distance_unit;
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $metric;
 
     /**
      * Get id
@@ -90,5 +98,45 @@ class User extends BaseUser
     public function getPoints()
     {
         return $this->points;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->rides = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add rides
+     *
+     * @param \Century\CenturyBundle\Entity\Ride $rides
+     * @return User
+     */
+    public function addRide(\Century\CenturyBundle\Entity\Ride $rides)
+    {
+        $this->rides[] = $rides;
+
+        return $this;
+    }
+
+    /**
+     * Remove rides
+     *
+     * @param \Century\CenturyBundle\Entity\Ride $rides
+     */
+    public function removeRide(\Century\CenturyBundle\Entity\Ride $rides)
+    {
+        $this->rides->removeElement($rides);
+    }
+
+    /**
+     * Get rides
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRides()
+    {
+        return $this->rides;
     }
 }
