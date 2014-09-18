@@ -1,0 +1,4 @@
+century_century:
+    resource: "@CenturyCenturyBundle/Resources/config/routing.yml"
+    prefix:   /
+
