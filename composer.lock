@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "26e03bc9f145640878f8d3b0d4189576",
+    "hash": "f3b068918bac5f5aae11c719a6a45b3e",
     "packages": [
         {
             "name": "braincrafted/bootstrap-bundle",
@@ -798,6 +798,34 @@
                 "stream"
             ],
             "time": "2014-08-17 21:15:53"
+        },
+        {
+            "name": "iamstuartwilson/strava",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/iamstuartwilson/strava.git",
+                "reference": "d098e5b5221805032154501ab3d4d3df08e5fe91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/iamstuartwilson/strava/zipball/d098e5b5221805032154501ab3d4d3df08e5fe91",
+                "reference": "d098e5b5221805032154501ab3d4d3df08e5fe91",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "StravaApi.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Simple PHP Library for the Strava v3 API",
+            "homepage": "https://github.com/iamstuartwilson/strava",
+            "time": "2014-09-04 12:08:21"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1956,7 +1984,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "snc/redis-bundle": 20,
-        "predis/predis": 20
+        "predis/predis": 20,
+        "iamstuartwilson/strava": 20
     },
     "prefer-stable": false,
     "platform": {

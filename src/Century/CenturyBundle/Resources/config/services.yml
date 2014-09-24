@@ -8,3 +8,6 @@ services:
     guzzle:
         class: GuzzleHttp\Client
         arguments: []
+    strava:
+        class: Strava\StravaApi
+        arguments: []
