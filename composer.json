@@ -11,9 +11,9 @@
             "type": "package",
             "package": {
                 "name": "jquery/jquery",
-                "version": "1.10.2",
+                "version": "1.11.1",
                 "dist": {
-                    "url": "http://code.jquery.com/jquery-1.10.2.js",
+                    "url": "http://code.jquery.com/jquery-1.11.1.js",
                     "type": "file"
                 }
             }
@@ -33,7 +33,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "braincrafted/bootstrap-bundle": "~2.1",
         "twbs/bootstrap": "~3.2",
-        "jquery/jquery":  "1.10.*",
+        "jquery/jquery":  "1.11.*",
         "snc/redis-bundle": "1.1.x-dev",
         "predis/predis": "0.8.x-dev"
     },
