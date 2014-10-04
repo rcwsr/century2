@@ -9,5 +9,5 @@ services:
         class: GuzzleHttp\Client
         arguments: []
     strava:
-        class: Strava\StravaApi
-        arguments: []
+        class: StravaApi
+        arguments: [%strava_id%, %strava_secret%]

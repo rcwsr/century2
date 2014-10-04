@@ -37,7 +37,8 @@
         "snc/redis-bundle": "1.1.x-dev",
         "predis/predis": "0.8.x-dev",
         "guzzlehttp/guzzle": "~4.0",
-        "iamstuartwilson/strava" : "dev-master"
+        "iamstuartwilson/strava" : "dev-master",
+        "behat/behat": "~3.0.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
