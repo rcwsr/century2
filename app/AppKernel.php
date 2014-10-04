@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
             new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
