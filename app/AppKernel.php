@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Century\CenturyBundle\CenturyCenturyBundle(),
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
+            new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -20,3 +20,7 @@ parameters:
 
     strava_id: ~
     strava_secret: ~
+
+    mongo_database_password:  ~
+    mongo_database_username: ~
+    mongo_database_db: ~
