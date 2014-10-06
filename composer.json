@@ -40,11 +40,13 @@
         "iamstuartwilson/strava" : "dev-master",
         "doctrine/mongodb-odm": "1.0.*@dev",
         "doctrine/mongodb-odm-bundle": "3.0.*@dev",
-        "hwi/oauth-bundle": "0.4.*@dev"
+        "hwi/oauth-bundle": "0.4.*@dev",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
-        "behat/behat": "~3.0.6"
+        "behat/behat": "~3.0.6",
+        "phpspec/phpspec": "2.0"
     },
     "scripts": {
         "post-root-package-install": [

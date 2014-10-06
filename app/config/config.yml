@@ -70,6 +70,7 @@ doctrine_mongodb:
             options:
                 username: "%mongo_database_user%"
                 password:  "%mongo_database_password%"
+                db: "%mongo_database_db%"
 
     default_database: "%mongo_database_db%"
     document_managers:
@@ -93,10 +94,21 @@ snc_redis:
 braincrafted_bootstrap:
     less_filter: less
 
-hwi_oauth_redirect:
-    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /connect
+hwi_oauth:
+    firewall_name: secured_area
+    resource_owners:
+        strava:
+            type:                oauth2
+            client_id:           %strava_id%
+            client_secret:       %strava_secret%
+            scope:              view_private
+            access_token_url:    https://www.strava.com/oauth/token
+            authorization_url:   https://www.strava.com/oauth/authorize
+            infos_url:           https://www.strava.com/api/v3/athlete
 
-hwi_oauth_login:
-    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
-    prefix:   /login
+            user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
+
+            paths:
+                identifier: id
+                nickname: firstname
+                realname: ['firstname', 'lastname']

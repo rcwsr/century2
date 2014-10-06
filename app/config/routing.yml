@@ -1,3 +1,14 @@
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /login
+
+strava_login:
+    pattern: /login/check-strava
+
 century_century:
     resource: "@CenturyCenturyBundle/Resources/config/routing.yml"
     prefix:   /
