@@ -8,6 +8,7 @@ security:
             encode_as_base64: false
             iterations:       1
     firewalls:
+
         secured_area:
             anonymous: ~
             oauth:
@@ -19,6 +20,8 @@ security:
 
                 oauth_user_provider:
                     service: century.oauth_user_provider
-
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

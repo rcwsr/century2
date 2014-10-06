@@ -106,9 +106,18 @@ hwi_oauth:
             authorization_url:   https://www.strava.com/oauth/authorize
             infos_url:           https://www.strava.com/api/v3/athlete
 
-            user_response_class: HWI\Bundle\OAuthBundle\OAuth\Response\PathUserResponse
+            user_response_class: Century\CenturyBundle\Auth\Response\StravaPathResponse
 
             paths:
                 identifier: id
                 nickname: firstname
                 realname: ['firstname', 'lastname']
+                firstname: firstname
+                lastname: lastname
+                profilepicture: profile
+                email: email
+                city: city
+                state: state
+                country: country
+                sex: sex
+                measurement: measurement_preference

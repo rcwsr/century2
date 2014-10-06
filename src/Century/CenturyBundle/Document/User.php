@@ -2,9 +2,7 @@
 
 namespace Century\CenturyBundle\Document;
 
-use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
-use Symfony\Component\Security\Core\Role\Role;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -30,13 +28,55 @@ class User implements UserInterface
      * @var string
      * @ODM\String
      */
-    protected $realname;
+    protected $firstname;
 
     /**
      * @var string
      * @ODM\String
      */
-    protected $nickname;
+    protected $lastname;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $profile_picture;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $city;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $state;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $country;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $sex;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $measurement;
+
+    /**
+     * @var string
+     * @ODM\String
+     */
+    protected $email;
 
     /**
      * Get id
@@ -68,50 +108,6 @@ class User implements UserInterface
     public function getStravaId()
     {
         return $this->strava_id;
-    }
-
-    /**
-     * Set realname
-     *
-     * @param string $realname
-     * @return self
-     */
-    public function setRealname($realname)
-    {
-        $this->realname = $realname;
-        return $this;
-    }
-
-    /**
-     * Get realname
-     *
-     * @return string $realname
-     */
-    public function getRealname()
-    {
-        return $this->realname;
-    }
-
-    /**
-     * Set nickname
-     *
-     * @param string $nickname
-     * @return self
-     */
-    public function setNickname($nickname)
-    {
-        $this->nickname = $nickname;
-        return $this;
-    }
-
-    /**
-     * Get nickname
-     *
-     * @return string $nickname
-     */
-    public function getNickname()
-    {
-        return $this->nickname;
     }
 
     /**
@@ -160,5 +156,203 @@ class User implements UserInterface
     public function getRoles()
     {
         return array('ROLE_USER', 'ROLE_OAUTH_USER');
+    }
+    
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     * @return self
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string $firstname
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     * @return self
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string $lastname
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return self
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string $city
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     * @return self
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string $state
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     * @return self
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string $country
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set sex
+     *
+     * @param string $sex
+     * @return self
+     */
+    public function setSex($sex)
+    {
+        $this->sex = $sex;
+        return $this;
+    }
+
+    /**
+     * Get sex
+     *
+     * @return string $sex
+     */
+    public function getSex()
+    {
+        return $this->sex;
+    }
+
+    /**
+     * Set measurement
+     *
+     * @param string $measurement
+     * @return self
+     */
+    public function setMeasurement($measurement)
+    {
+        $this->measurement = $measurement;
+        return $this;
+    }
+
+    /**
+     * Get measurement
+     *
+     * @return string $measurement
+     */
+    public function getMeasurement()
+    {
+        return $this->measurement;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return self
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string $email
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set profilePicture
+     *
+     * @param string $profilePicture
+     * @return self
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profile_picture = $profilePicture;
+        return $this;
+    }
+
+    /**
+     * Get profilePicture
+     *
+     * @return string $profilePicture
+     */
+    public function getProfilePicture()
+    {
+        return $this->profile_picture;
     }
 }
