@@ -9,6 +9,9 @@ hwi_oauth_login:
 strava_login:
     pattern: /login/check-strava
 
+logout:
+    pattern: /logout
+
 century_century:
     resource: "@CenturyCenturyBundle/Resources/config/routing.yml"
     prefix:   /
