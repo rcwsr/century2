@@ -355,4 +355,9 @@ class User implements UserInterface
     {
         return $this->profile_picture;
     }
+
+    public function __toString()
+    {
+        return $this->firstname;
+    }
 }

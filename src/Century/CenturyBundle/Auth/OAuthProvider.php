@@ -7,6 +7,7 @@ use Century\CenturyBundle\Document\User;
 use Doctrine\Common\Persistence\ObjectManager;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class OAuthProvider extends OAuthUserProvider
 {
@@ -22,11 +23,11 @@ class OAuthProvider extends OAuthUserProvider
         $user_repo = $this->om->getRepository('CenturyCenturyBundle:User');
         $user = $user_repo->findOneBy(['strava_id' => $username]);
 
-        if ($user) {
-            return $user;
-        } else {
-            return new User();
+        if (!$user) {
+            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
         }
+
+        return $user;
     }
 
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
@@ -37,18 +38,19 @@ class OAuthProvider extends OAuthUserProvider
 
         if ($user) {
             $user = $this->assignUserProperties($user, $response);
-            //return $user;
+
+
         } else {
             $user = new User();
             $user->setStravaId($response->getUsername());
             $user = $this->assignUserProperties($user, $response);
 
-
         }
+
         $this->om->persist($user);
         $this->om->flush();
 
-        return $this->loadUserByUsername($user->getUsername());
+        return $user;
     }
 
 
@@ -63,8 +65,7 @@ class OAuthProvider extends OAuthUserProvider
             ->setCity($response->getCity())
             ->setState($response->getState())
             ->setCountry($response->getCountry())
-            ->setMeasurement($response->getMeasurement())
-        ;
+            ->setMeasurement($response->getMeasurement());
         return $user;
     }
 
