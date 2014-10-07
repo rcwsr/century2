@@ -17,3 +17,6 @@ services:
     century.oauth_user_provider:
         class: Century\CenturyBundle\Auth\OAuthProvider
         arguments: [@doctrine.odm.mongodb.document_manager]
+    century.consumer.strava:
+        class: Century\CenturyBundle\Consumer\StravaConsumer
+        arguments: [@guzzle, @security.context]
