@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Snc\RedisBundle\SncRedisBundle(),
             new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Leezy\PheanstalkBundle\LeezyPheanstalkBundle(),
+            new Vivait\WorkerCommandBundle\VivaitWorkerCommandBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

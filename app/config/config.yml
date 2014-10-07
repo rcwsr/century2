@@ -121,3 +121,9 @@ hwi_oauth:
                 country: country
                 sex: sex
                 measurement: measurement_preference
+leezy_pheanstalk:
+    enabled: true
+    pheanstalks:
+        primary:
+            server: localhost
+            default: true

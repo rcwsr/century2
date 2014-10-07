@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "173a7b8ac5d92cbbf18f653b47997e7a",
+    "hash": "b85002eefb72c90f84a6094194091c6f",
     "packages": [
         {
             "name": "braincrafted/bootstrap-bundle",
@@ -552,6 +552,60 @@
             "time": "2013-01-10 21:49:15"
         },
         {
+            "name": "doctrine/instantiator",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/instantiator.git",
+                "reference": "8806c41c178ad4a2e87294b851d730779555d252"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8806c41c178ad4a2e87294b851d730779555d252",
+                "reference": "8806c41c178ad4a2e87294b851d730779555d252",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.3"
+            },
+            "require-dev": {
+                "athletic/athletic": "~0.1.8",
+                "ext-pdo": "*",
+                "ext-phar": "*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "2.0.*@ALPHA"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Doctrine\\Instantiator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/"
+                }
+            ],
+            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
+            "homepage": "https://github.com/doctrine/instantiator",
+            "keywords": [
+                "constructor",
+                "instantiate"
+            ],
+            "time": "2014-10-04 22:48:25"
+        },
+        {
             "name": "doctrine/lexer",
             "version": "v1.0",
             "source": {
@@ -676,12 +730,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/mongodb-odm.git",
-                "reference": "096b5ef69cf69bb87efc6075119e96ff392cec84"
+                "reference": "29bdaa310f791fc0ec439fe2935348dfce4797c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/096b5ef69cf69bb87efc6075119e96ff392cec84",
-                "reference": "096b5ef69cf69bb87efc6075119e96ff392cec84",
+                "url": "https://api.github.com/repos/doctrine/mongodb-odm/zipball/29bdaa310f791fc0ec439fe2935348dfce4797c3",
+                "reference": "29bdaa310f791fc0ec439fe2935348dfce4797c3",
                 "shasum": ""
             },
             "require": {
@@ -690,6 +744,7 @@
                 "doctrine/collections": "~1.1",
                 "doctrine/common": "2.4.*",
                 "doctrine/inflector": "~1.0",
+                "doctrine/instantiator": "~1.0.1",
                 "doctrine/mongodb": ">=1.1.5,<2.0",
                 "php": ">=5.3.2",
                 "symfony/console": "~2.0"
@@ -741,7 +796,7 @@
                 "odm",
                 "persistence"
             ],
-            "time": "2014-10-01 20:56:26"
+            "time": "2014-10-06 15:30:16"
         },
         {
             "name": "doctrine/mongodb-odm-bundle",
@@ -812,16 +867,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.4.5",
+            "version": "v2.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "c0d3cdbdfbf873871167050ab077e49b1ad02ab0"
+                "reference": "bebacf79d8d4dae9168f0f9bc6811e6c2cb6a4d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/c0d3cdbdfbf873871167050ab077e49b1ad02ab0",
-                "reference": "c0d3cdbdfbf873871167050ab077e49b1ad02ab0",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/bebacf79d8d4dae9168f0f9bc6811e6c2cb6a4d9",
+                "reference": "bebacf79d8d4dae9168f0f9bc6811e6c2cb6a4d9",
                 "shasum": ""
             },
             "require": {
@@ -881,7 +936,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-09-22 21:58:51"
+            "time": "2014-10-06 13:22:50"
         },
         {
             "name": "friendsofsymfony/user-bundle",
@@ -1442,6 +1497,62 @@
             "time": "2014-09-15 12:42:36"
         },
         {
+            "name": "leezy/pheanstalk-bundle",
+            "version": "2.4.1",
+            "target-dir": "Leezy/PheanstalkBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/armetiz/LeezyPheanstalkBundle.git",
+                "reference": "b1b1aa4f0bc7f2b3fad0d98b55a7f58f5f0ee424"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/armetiz/LeezyPheanstalkBundle/zipball/b1b1aa4f0bc7f2b3fad0d98b55a7f58f5f0ee424",
+                "reference": "b1b1aa4f0bc7f2b3fad0d98b55a7f58f5f0ee424",
+                "shasum": ""
+            },
+            "require": {
+                "pda/pheanstalk": ">=2.1.0,<3.0-dev",
+                "symfony/console": "~2.0",
+                "symfony/framework-bundle": ">=2.0",
+                "symfony/monolog-bridge": ">=2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Leezy\\PheanstalkBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Thomas Tourlourat",
+                    "email": "thomas@tourlourat.com",
+                    "homepage": "http://www.armetiz.info"
+                }
+            ],
+            "description": "The LeezyPheanstalkBundle is a Symfony2 Bundle that provides a command line interface for manage the Beanstalkd workqueue server & a pheanstalk integration.",
+            "homepage": "https://github.com/armetiz/LeezyPheanstalkBundle",
+            "keywords": [
+                "asynchronous",
+                "beanstalkd",
+                "bundle",
+                "messaging",
+                "pheanstalk",
+                "queueing",
+                "symfony"
+            ],
+            "time": "2014-08-22 12:32:21"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.11.0",
             "source": {
@@ -1512,6 +1623,48 @@
                 "psr-3"
             ],
             "time": "2014-09-30 13:30:58"
+        },
+        {
+            "name": "pda/pheanstalk",
+            "version": "v2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pda/pheanstalk.git",
+                "reference": "ab006cf9330fb5d3799f30a5d9841b85edb40a0f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pda/pheanstalk/zipball/ab006cf9330fb5d3799f30a5d9841b85edb40a0f",
+                "reference": "ab006cf9330fb5d3799f30a5d9841b85edb40a0f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Pheanstalk": "classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Annesley",
+                    "email": "paul@annesley.cc",
+                    "homepage": "http://paul.annesley.cc/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP client for beanstalkd queue",
+            "homepage": "https://github.com/pda/pheanstalk",
+            "keywords": [
+                "beanstalkd"
+            ],
+            "time": "2013-04-03 09:15:34"
         },
         {
             "name": "predis/predis",
@@ -2362,6 +2515,90 @@
                 "templating"
             ],
             "time": "2014-07-05 12:19:05"
+        },
+        {
+            "name": "vivait/worker-command-bundle",
+            "version": "dev-master",
+            "target-dir": "Vivait/WorkerCommandBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vivait/WorkerCommandBundle.git",
+                "reference": "70f2421d11e52533ed1b11d05d8687e6836789b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vivait/WorkerCommandBundle/zipball/70f2421d11e52533ed1b11d05d8687e6836789b3",
+                "reference": "70f2421d11e52533ed1b11d05d8687e6836789b3",
+                "shasum": ""
+            },
+            "require": {
+                "leezy/pheanstalk-bundle": "2.*",
+                "wrep/daemonizable-command": "1.2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Vivait\\WorkerCommandBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Cawser",
+                    "email": "robin@vivait.co.uk"
+                }
+            ],
+            "description": "Integrates Pheanstalk and endless commands to allow easy creation of custom workers.",
+            "time": "2014-08-15 09:14:28"
+        },
+        {
+            "name": "wrep/daemonizable-command",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mac-cain13/daemonizable-command.git",
+                "reference": "84f6c9889f1b6676e1f907b2d0f42afbac7804ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mac-cain13/daemonizable-command/zipball/84f6c9889f1b6676e1f907b2d0f42afbac7804ac",
+                "reference": "84f6c9889f1b6676e1f907b2d0f42afbac7804ac",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/console": "2.*",
+                "symfony/dependency-injection": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Wrep\\Daemonizable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathijs Kadijk",
+                    "email": "mathijs@wrep.nl"
+                }
+            ],
+            "description": "Daemonizable (endless running) commands for Symfony2.",
+            "homepage": "https://github.com/mac-cain13/daemonizable-command",
+            "keywords": [
+                "Symfony2",
+                "background process",
+                "backgrounding",
+                "daemon",
+                "long running process"
+            ],
+            "time": "2014-08-25 08:37:09"
         }
     ],
     "packages-dev": [
@@ -2543,60 +2780,6 @@
                 "transliterator"
             ],
             "time": "2014-05-15 22:08:22"
-        },
-        {
-            "name": "doctrine/instantiator",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8806c41c178ad4a2e87294b851d730779555d252"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8806c41c178ad4a2e87294b851d730779555d252",
-                "reference": "8806c41c178ad4a2e87294b851d730779555d252",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~5.3"
-            },
-            "require-dev": {
-                "athletic/athletic": "~0.1.8",
-                "ext-pdo": "*",
-                "ext-phar": "*",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "2.0.*@ALPHA"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Doctrine\\Instantiator\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
-                }
-            ],
-            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
-            "homepage": "https://github.com/doctrine/instantiator",
-            "keywords": [
-                "constructor",
-                "instantiate"
-            ],
-            "time": "2014-10-04 22:48:25"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -2871,7 +3054,8 @@
         "doctrine/mongodb-odm": 20,
         "doctrine/mongodb-odm-bundle": 20,
         "hwi/oauth-bundle": 20,
-        "friendsofsymfony/user-bundle": 20
+        "friendsofsymfony/user-bundle": 20,
+        "vivait/worker-command-bundle": 20
     },
     "prefer-stable": false,
     "platform": {
