@@ -4,11 +4,26 @@
 namespace Century\CenturyBundle\Command;
 
 
+use Century\CenturyBundle\Consumer\ConsumerInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Vivait\WorkerCommandBundle\Command\WorkerCommand;
 
-class ActivityWorkerCommand extends WorkerCommand{
+class ActivityWorkerCommand extends WorkerCommand
+{
+    /**
+     * @var ConsumerInterface
+     */
+    private $consumer;
+
+    /**
+     * @param ConsumerInterface $consumer
+     */
+    public function __construct(ConsumerInterface $consumer)
+    {
+        parent::__construct(null);
+        $this->consumer = $consumer;
+    }
 
     /**
      * Set the namespace of the command, e.g. vivait:queue:worker:email
@@ -17,7 +32,7 @@ class ActivityWorkerCommand extends WorkerCommand{
      */
     protected function setCommandNamespace()
     {
-        // TODO: Implement setCommandNamespace() method.
+        return "century:queue:worker:activities";
     }
 
     /**
@@ -28,7 +43,6 @@ class ActivityWorkerCommand extends WorkerCommand{
      */
     protected function setArguments()
     {
-        // TODO: Implement setArguments() method.
     }
 
     /**
@@ -39,7 +53,12 @@ class ActivityWorkerCommand extends WorkerCommand{
      */
     protected function performAction($payload, InputInterface $input, OutputInterface $output)
     {
+        $data = \GuzzleHttp\json_decode($payload);
 
+        $from = \DateTime::createFromFormat('U', $data->from);
+        $to = \DateTime::createFromFormat('U', $data->to);
+
+        $rides = $this->consumer->getActivities($data->key, $from, $to);
     }
 
     /**

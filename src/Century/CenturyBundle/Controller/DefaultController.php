@@ -14,13 +14,18 @@ class DefaultController extends Controller
 
         //$user = $repo->find($this->getUser()->getId());
 
-
-
-        $consumer = $this->get('century.consumer.strava');
-
         $after = new \DateTime('2010-01-01');
-        var_dump($consumer->getActivities($after->getTimestamp(), time()));
-        //var_dump($repo->findAll());
+        $beanstalk = $this->get("leezy.pheanstalk.primary");
+        $beanstalk
+            ->useTube('century.tube.activities')
+            ->put(json_encode([
+                'from' => $after->getTimestamp(),
+                'to' => time(),
+                'key' => $this->get('security.context')->getToken()->getAccessToken(),
+            ]));
+
+
+
         return $this->render('CenturyCenturyBundle:Default:index.html.twig');
     }
 }

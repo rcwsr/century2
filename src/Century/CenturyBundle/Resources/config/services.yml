@@ -19,4 +19,9 @@ services:
         arguments: [@doctrine.odm.mongodb.document_manager]
     century.consumer.strava:
         class: Century\CenturyBundle\Consumer\StravaConsumer
-        arguments: [@guzzle, @security.context]
+        arguments: [@guzzle]
+    century.command.worker.activity:
+        class: Century\CenturyBundle\Command\ActivityWorkerCommand
+        arguments: [@century.consumer.strava]
+        tags:
+            -  { name: console.command }

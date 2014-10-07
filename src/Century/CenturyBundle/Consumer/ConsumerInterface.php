@@ -4,7 +4,7 @@
 namespace Century\CenturyBundle\Consumer;
 
 
-interface ConsumerInterface {
-
-    public function getActivities($after, $before);
-} 
+interface ConsumerInterface
+{
+    public function getActivities($token, \DateTime $from, \DateTime $to);
+}

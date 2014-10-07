@@ -12,10 +12,6 @@ class StravaConsumer implements ConsumerInterface
      * @var ClientInterface
      */
     private $http;
-    /**
-     * @var SecurityContextInterface
-     */
-    private $context;
 
     const API_URL = 'https://www.strava.com/api/v3/';
 
@@ -24,10 +20,9 @@ class StravaConsumer implements ConsumerInterface
      * @param ClientInterface $http
      * @param SecurityContextInterface $context
      */
-    public function __construct(Client $http, SecurityContextInterface $context)
+    public function __construct(Client $http)
     {
         $this->http = $http;
-        $this->context = $context;
     }
 
     /**
@@ -35,14 +30,14 @@ class StravaConsumer implements ConsumerInterface
      *
      * @return array
      */
-    public function getActivities($after, $before)
+    public function getActivities($token, \DateTime $from, \DateTime $to)
     {
         $activities = [];
         $page = 1;
         $entries = true;
 
         while($entries){
-            $request = $this->getActivitiesPage($after, $before, $page++, 200);
+            $request = $this->getActivitiesPage($token, $from, $to, $page++, 200);
             if(count($request) == 0){
                 $entries = false;
             }
@@ -55,13 +50,13 @@ class StravaConsumer implements ConsumerInterface
         return $activities;
     }
 
-    private function getActivitiesPage($after, $before, $page, $per_page)
+    private function getActivitiesPage($token, \DateTime $from, \DateTime $to, $page, $per_page)
     {
         $get = $this->http->get(self::API_URL . 'athlete/activities', [
             'query' => [
-                'access_token' => $this->context->getToken()->getAccessToken(),
-                'before' => $before,
-                'after' => $after,
+                'access_token' => $token,
+                'before' => $from->getTimestamp(),
+                'after' => $to->getTimestamp(),
                 'per_page' => $per_page,
                 'page' => $page
             ]
