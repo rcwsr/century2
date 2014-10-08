@@ -58,7 +58,9 @@ class ActivityWorkerCommand extends WorkerCommand
         $from = \DateTime::createFromFormat('U', $data->from);
         $to = \DateTime::createFromFormat('U', $data->to);
 
-        $rides = $this->consumer->getActivities($data->key, $from, $to);
+        $rides = $this->consumer->getActivities($data->token, $from, $to);
+
+        $output->writeln(count($rides));
     }
 
     /**

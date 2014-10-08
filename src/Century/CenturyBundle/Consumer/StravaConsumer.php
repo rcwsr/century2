@@ -17,8 +17,7 @@ class StravaConsumer implements ConsumerInterface
 
 
     /**
-     * @param ClientInterface $http
-     * @param SecurityContextInterface $context
+     * @param Client $http
      */
     public function __construct(Client $http)
     {
@@ -37,31 +36,26 @@ class StravaConsumer implements ConsumerInterface
         $entries = true;
 
         while($entries){
-            $request = $this->getActivitiesPage($token, $from, $to, $page++, 200);
-            if(count($request) == 0){
+
+            $response = $this->http->get(self::API_URL . 'athlete/activities', [
+                'query' => [
+                    'access_token' => $token,
+                    'after' => $from->getTimestamp(),
+                    'before' => $to->getTimestamp(),
+                    'per_page' => 200,
+                    'page' => $page++
+                ]
+            ])->json();
+
+            if(count($response) == 0){
                 $entries = false;
             }
 
-            foreach($request as $activity){
+            foreach($response as $activity){
                 $activities[] = $activity;
             }
         }
 
         return $activities;
-    }
-
-    private function getActivitiesPage($token, \DateTime $from, \DateTime $to, $page, $per_page)
-    {
-        $get = $this->http->get(self::API_URL . 'athlete/activities', [
-            'query' => [
-                'access_token' => $token,
-                'before' => $from->getTimestamp(),
-                'after' => $to->getTimestamp(),
-                'per_page' => $per_page,
-                'page' => $page
-            ]
-        ]);
-
-        return $get->json();
     }
 }

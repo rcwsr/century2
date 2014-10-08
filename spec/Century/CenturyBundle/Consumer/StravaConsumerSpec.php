@@ -15,17 +15,26 @@ class StravaConsumerSpec extends ObjectBehavior
         $this->shouldHaveType('Century\CenturyBundle\Consumer\StravaConsumer');
     }
 
-    /**
-     * @param ClientInterface $guzzle
-     * @param SecurityContextInterface $context
-     */
-    public function let(Client $guzzle, SecurityContextInterface $context)
+
+    public function let(Client $guzzle)
     {
-        $this->beConstructedWith($guzzle, $context);
+        $this->beConstructedWith($guzzle);
     }
 
     function it_can_get_all_activities_before_a_date(Client $guzzle)
     {
+        $from = \DateTime::createFromFormat('U', time());
+        $to = \DateTime::createFromFormat('U', time());
+        $guzzle->get(Argument::any(), Argument::any())->willReturn(
+            [
+                ['id' => '1'],
+                ['id' => '2'],
+            ]
+            );
 
+
+        $this->getActivities(Argument::any(), $from, $to);
     }
+
+
 }
