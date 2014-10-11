@@ -30,14 +30,6 @@ class Activity
      * @ODM\Date
      */
     protected $date;
-    
-    /**
-     * @var User
-     * @ODM\ReferenceOne(targetDocument="Century\CenturyBundle\Document\User")
-     */
-    protected $user;
-
-
 
     /**
      * Get id
