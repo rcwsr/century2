@@ -17,7 +17,7 @@ class DistanceFilter implements FilterInterface
         $activities = [];
 
         foreach ($this->activities as $activity) {
-            $distance = (int) $activity['distance'];
+            $distance = (int) $activity->getDistance();
 
             switch ($this->operator) {
                 case '>':

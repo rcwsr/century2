@@ -2,6 +2,7 @@
 
 namespace spec\Century\CenturyBundle\Filter;
 
+use Century\CenturyBundle\Document\Activity;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -12,44 +13,46 @@ class DistanceFilterSpec extends ObjectBehavior
         $this->shouldHaveType('Century\CenturyBundle\Filter\DistanceFilter');
     }
 
-    function let()
+    function let(Activity $activity1, Activity $activity2, Activity $activity3)
     {
+        $activity1->getDistance()->willReturn(5000);
+        $activity2->getDistance()->willReturn(8000);
+        $activity3->getDistance()->willReturn(100);
+
         $this->setActivities([
-            ['distance' => '5000'],
-            ['distance' => '8000'],
-            ['distance' => '100'],
+            $activity1, $activity2, $activity3
         ]);
     }
 
-    function it_filters_based_on_distance()
+    function it_filters_based_on_distance(Activity $activity1, Activity $activity2, Activity $activity3)
     {
         $this->setOptions(['distance' => 5000, 'operator' => '>']);
 
         $this->filter()->shouldReturn([
-            ['distance' => '8000'],
+            $activity2,
         ]);
 
         $this->setOptions(['distance' => 10000, 'operator' => '<']);
 
         $this->filter()->shouldReturn([
-            ['distance' => '5000'],
-            ['distance' => '8000'],
-            ['distance' => '100'],
+            $activity1,
+            $activity2,
+            $activity3,
         ]);
 
         $this->setOptions(['distance' => 100, 'operator' => '>=']);
 
         $this->filter()->shouldReturn([
-            ['distance' => '5000'],
-            ['distance' => '8000'],
-            ['distance' => '100'],
+            $activity1,
+            $activity2,
+            $activity3,
         ]);
 
         $this->setOptions(['distance' => 5000, 'operator' => '<=']);
 
         $this->filter()->shouldReturn([
-            ['distance' => '5000'],
-            ['distance' => '100'],
+            $activity1,
+            $activity3,
         ]);
     }
 

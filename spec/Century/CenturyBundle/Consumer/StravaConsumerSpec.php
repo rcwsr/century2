@@ -21,20 +21,20 @@ class StravaConsumerSpec extends ObjectBehavior
         $this->beConstructedWith($guzzle);
     }
 
-    function it_can_get_all_activities_before_a_date(Client $guzzle)
-    {
-        $from = \DateTime::createFromFormat('U', time());
-        $to = \DateTime::createFromFormat('U', time());
-        $guzzle->get(Argument::any(), Argument::any())->willReturn(
-            [
-                ['id' => '1'],
-                ['id' => '2'],
-            ]
-            );
-
-
-        $this->getActivities(Argument::any(), $from, $to);
-    }
+//    function it_can_get_all_activities_before_a_date(Client $guzzle)
+//    {
+//        $from = \DateTime::createFromFormat('U', time());
+//        $to = \DateTime::createFromFormat('U', time());
+//        $guzzle->get(Argument::any(), Argument::any())->willReturn(
+//            [
+//                ['id' => '1'],
+//                ['id' => '2'],
+//            ]
+//            );
+//
+//
+//        $this->getActivities(Argument::any(), $from, $to);
+//    }
 
 
 }

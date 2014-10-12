@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Test\FormBuilderInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Vivait\WorkerCommandBundle\Command\WorkerCommand;
 
 class ActivityWorkerCommand extends WorkerCommand
@@ -24,30 +25,23 @@ class ActivityWorkerCommand extends WorkerCommand
      * @var ActivityProcessor
      */
     private $processor;
-
     /**
-     * @var FormTypeInterface
+     * @var ValidatorInterface
      */
-    private $form;
-    /**
-     * @var FormFactoryInterface
-     */
-    private $factory;
+    private $validator;
 
 
     /**
      * @param ConsumerInterface $consumer
      * @param ActivityProcessor $processor
-     * @param FormTypeInterface $form
-     * @param FormFactoryInterface $factory
+     * @param ValidatorInterface $validator
      */
-    public function __construct(ConsumerInterface $consumer, ActivityProcessor $processor, FormTypeInterface $form, FormFactoryInterface $factory)
+    public function __construct(ConsumerInterface $consumer, ActivityProcessor $processor, ValidatorInterface $validator)
     {
         parent::__construct(null);
         $this->consumer = $consumer;
         $this->processor = $processor;
-        $this->form = $form;
-        $this->factory = $factory;
+        $this->validator = $validator;
     }
 
     /**
@@ -83,17 +77,10 @@ class ActivityWorkerCommand extends WorkerCommand
         $from = \DateTime::createFromFormat('U', $data->from);
         $to = \DateTime::createFromFormat('U', $data->to);
 
-        $raw_activities = $this->consumer->getActivities($data->token, $from, $to);
-        $activities = [];
-        foreach($raw_activities as $raw_activity){
-            $activity = new Activity();
-            $form = $this->factory->create($this->form, $raw_activity);
+        $activities = $this->consumer->getActivities($data->token, $from, $to);
 
-            if($form->isValid())
-                $activities[] = $activity;
-        }
-
-        $this->processor->process($activities);
+        $this->processor->setFilters()
+            ->process($activities);
     }
 
     /**
