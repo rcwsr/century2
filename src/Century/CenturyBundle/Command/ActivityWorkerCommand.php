@@ -5,8 +5,13 @@ namespace Century\CenturyBundle\Command;
 
 
 use Century\CenturyBundle\Consumer\ConsumerInterface;
+use Century\CenturyBundle\Document\Activity;
+use Century\CenturyBundle\Processor\ActivityProcessor;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormTypeInterface;
+use Symfony\Component\Form\Test\FormBuilderInterface;
 use Vivait\WorkerCommandBundle\Command\WorkerCommand;
 
 class ActivityWorkerCommand extends WorkerCommand
@@ -15,14 +20,34 @@ class ActivityWorkerCommand extends WorkerCommand
      * @var ConsumerInterface
      */
     private $consumer;
+    /**
+     * @var ActivityProcessor
+     */
+    private $processor;
+
+    /**
+     * @var FormTypeInterface
+     */
+    private $form;
+    /**
+     * @var FormFactoryInterface
+     */
+    private $factory;
+
 
     /**
      * @param ConsumerInterface $consumer
+     * @param ActivityProcessor $processor
+     * @param FormTypeInterface $form
+     * @param FormFactoryInterface $factory
      */
-    public function __construct(ConsumerInterface $consumer)
+    public function __construct(ConsumerInterface $consumer, ActivityProcessor $processor, FormTypeInterface $form, FormFactoryInterface $factory)
     {
         parent::__construct(null);
         $this->consumer = $consumer;
+        $this->processor = $processor;
+        $this->form = $form;
+        $this->factory = $factory;
     }
 
     /**
@@ -58,9 +83,17 @@ class ActivityWorkerCommand extends WorkerCommand
         $from = \DateTime::createFromFormat('U', $data->from);
         $to = \DateTime::createFromFormat('U', $data->to);
 
-        $rides = $this->consumer->getActivities($data->token, $from, $to);
+        $raw_activities = $this->consumer->getActivities($data->token, $from, $to);
+        $activities = [];
+        foreach($raw_activities as $raw_activity){
+            $activity = new Activity();
+            $form = $this->factory->create($this->form, $raw_activity);
 
-        $output->writeln(count($rides));
+            if($form->isValid())
+                $activities[] = $activity;
+        }
+
+        $this->processor->process($activities);
     }
 
     /**

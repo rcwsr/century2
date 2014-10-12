@@ -24,7 +24,7 @@ services:
         class: Century\CenturyBundle\Processor\ActivityProcessor
     century.command.worker.activity:
         class: Century\CenturyBundle\Command\ActivityWorkerCommand
-        arguments: [@century.consumer.strava, @century.processor.activity]
+        arguments: [@century.consumer.strava, @century.processor.activity, @century.form.type.activity, @form.factory]
         tags:
             -  { name: console.command }
     century.form.type.activity:
