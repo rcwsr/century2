@@ -20,8 +20,14 @@ services:
     century.consumer.strava:
         class: Century\CenturyBundle\Consumer\StravaConsumer
         arguments: [@guzzle]
+    century.processor.activity:
+        class: Century\CenturyBundle\Processor\ActivityProcessor
     century.command.worker.activity:
         class: Century\CenturyBundle\Command\ActivityWorkerCommand
-        arguments: [@century.consumer.strava]
+        arguments: [@century.consumer.strava, @century.processor.activity]
         tags:
             -  { name: console.command }
+    century.form.type.activity:
+        class: Century\CenturyBundle\Form\Type\ActivityType
+        tags:
+            - { name: form.type, alias: activity }
