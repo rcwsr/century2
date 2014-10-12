@@ -371,7 +371,7 @@ class User implements UserInterface
     }
     public function __construct()
     {
-        $this->rides = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     /**
