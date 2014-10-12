@@ -17,7 +17,7 @@ class User implements UserInterface
     /**
      * @ODM\Id
      */
-    protected $id;
+    protected $internal_id;
 
     /**
      * @var int
@@ -25,7 +25,7 @@ class User implements UserInterface
      * @ODM\Int
      * @ODM\Index(unique=true)
      */
-    protected $strava_id;
+    protected $id;
 
     /**
      * @var string
@@ -86,38 +86,6 @@ class User implements UserInterface
      * @ODM\EmbedMany(targetDocument="Century\CenturyBundle\Document\Activity")
      */
     protected $activities;
-
-    /**
-     * Get id
-     *
-     * @return  $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set stravaId
-     *
-     * @param int $stravaId
-     * @return self
-     */
-    public function setStravaId($stravaId)
-    {
-        $this->strava_id = $stravaId;
-        return $this;
-    }
-
-    /**
-     * Get stravaId
-     *
-     * @return int $stravaId
-     */
-    public function getStravaId()
-    {
-        return $this->strava_id;
-    }
 
     /**
      * {@inheritDoc}
@@ -402,5 +370,37 @@ class User implements UserInterface
     public function getActivities()
     {
         return $this->activities;
+    }
+
+    /**
+     * Get internalId
+     *
+     * @return id $internalId
+     */
+    public function getInternalId()
+    {
+        return $this->internal_id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int $id
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

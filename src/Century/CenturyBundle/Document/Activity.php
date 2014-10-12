@@ -2,6 +2,7 @@
 
 namespace Century\CenturyBundle\Document;
 
+use Century\CenturyBundle\Document\User;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -13,12 +14,12 @@ class Activity
     /**
      * @ODM\Id
      */
-    protected $id;
+    protected $internal_id;
 
     /**
      * @ODM\Int()
      */
-    protected $ride_id;
+    protected $id;
 
     /**
      * @var float
@@ -30,16 +31,6 @@ class Activity
      * @ODM\Date
      */
     protected $date;
-
-    /**
-     * Get id
-     *
-     * @return id $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set distance
@@ -88,10 +79,10 @@ class Activity
     /**
      * Set user
      *
-     * @param Century\CenturyBundle\Document\User $user
+     * @param User $user
      * @return self
      */
-    public function setUser(\Century\CenturyBundle\Document\User $user)
+    public function setUser(User $user)
     {
         $this->user = $user;
         return $this;
@@ -100,32 +91,44 @@ class Activity
     /**
      * Get user
      *
-     * @return Century\CenturyBundle\Document\User $user
+     * @return User $user
      */
     public function getUser()
     {
         return $this->user;
     }
 
+
+
     /**
-     * Set rideId
+     * Get internalId
      *
-     * @param int $rideId
+     * @return id $internalId
+     */
+    public function getInternalId()
+    {
+        return $this->internal_id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
      * @return self
      */
-    public function setRideId($rideId)
+    public function setId($id)
     {
-        $this->ride_id = $rideId;
+        $this->id = $id;
         return $this;
     }
 
     /**
-     * Get rideId
+     * Get id
      *
-     * @return int $rideId
+     * @return int $id
      */
-    public function getRideId()
+    public function getId()
     {
-        return $this->ride_id;
+        return $this->id;
     }
 }
