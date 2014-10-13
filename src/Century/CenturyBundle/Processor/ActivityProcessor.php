@@ -28,17 +28,12 @@ class ActivityProcessor implements ProcessorInterface
      */
     private function performFilters()
     {
-        $activities = [];
-        if(empty($this->filters)){
-            $activities = $this->data;
-        }
-        else{
+        if(!empty($this->filters)){
             foreach ($this->filters as $filter) {
-                $activities = $filter->filter($this->data);
+                $this->data = $filter->filter($this->data);
             }
         }
 
-        return $activities;
     }
 
     /**
@@ -46,8 +41,9 @@ class ActivityProcessor implements ProcessorInterface
      */
     public function process()
     {
-        $data = $this->performFilters();
-        return $data;
+        $this->performFilters();
+
+        return $this->data;
     }
 
     /**

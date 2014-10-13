@@ -7,40 +7,40 @@ class DistanceFilter implements FilterInterface
 {
     private $distance;
     private $operator;
-    private $activities;
 
     /**
+     * @param array $activities
      * @return array
      */
-    public function filter()
+    public function filter(array $activities)
     {
-        $activities = [];
+        $filtered_activities = [];
 
-        foreach ($this->activities as $activity) {
+        foreach ($activities as $activity) {
             $distance = (int) $activity->getDistance();
 
             switch ($this->operator) {
                 case '>':
                     if ($distance > $this->distance)
-                        $activities[] = $activity;
+                        $filtered_activities[] = $activity;
                     break;
                 case '<':
                     if ($distance < $this->distance)
-                        $activities[] = $activity;
+                        $filtered_activities[] = $activity;
                     break;
                 case '<=':
                     if ($distance <= $this->distance)
-                        $activities[] = $activity;
+                        $filtered_activities[] = $activity;
                     break;
                 case '>=':
                     if ($distance >= $this->distance)
-                        $activities[] = $activity;
+                        $filtered_activities[] = $activity;
                     break;
                 default: throw new \InvalidArgumentException();
             }
         }
 
-        return $activities;
+        return $filtered_activities;
     }
 
     /**
@@ -51,16 +51,6 @@ class DistanceFilter implements FilterInterface
     {
         $this->distance = $options['distance'];
         $this->operator = $options['operator'];
-        return $this;
-    }
-
-    /**
-     * @param array $activities
-     * @return $this|FilterInterface
-     */
-    public function setActivities(array $activities)
-    {
-        $this->activities = $activities;
         return $this;
     }
 }

@@ -50,27 +50,60 @@ class ActivityProcessorSpec extends ObjectBehavior
         ]);
     }
 
-    function it_returns_an_array_of_rides_with_one_filter(DistanceFilter $distance_filter1, Activity $activity1, Activity $activity2, Activity $activity3)
+    function it_can_filter_activities_with_one_filter(DistanceFilter $distance_filter1, Activity $activity1, Activity $activity2, Activity $activity3)
     {
         $distance_filter1->setOptions([
             'distance' => 100,
-            'operator' => '>=',
+            'operator' => '>',
         ]);
 
         $this->setFilters([
             $distance_filter1,
         ]);
 
-        $distance_filter1->setActivities([
+        $distance_filter1->filter([
             $activity1, $activity2, $activity3
+        ])->willReturn(
+            [$activity1, $activity2]
+        );
+
+        $this->process()->shouldReturn([
+            $activity1, $activity2
         ]);
+    }
+
+    function it_can_filter_activities_with_multiple_filters(DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3)
+    {
+        $distance_filter1->setOptions([
+            'distance' => 100,
+            'operator' => '>',
+        ]);
+
+        $distance_filter2->setOptions([
+            'distance' => 8000,
+            'operator' => '<',
+        ]);
+
+        $this->setFilters([
+            $distance_filter1,
+            $distance_filter2,
+        ]);
+
 
         $distance_filter1->filter([
             $activity1, $activity2, $activity3
-        ])->shouldBeCalled();
+        ])->willReturn([
+            $activity1, $activity2]
+        );
+
+        $distance_filter2->filter([
+            $activity1, $activity2
+        ])->willReturn([
+            $activity1]
+        );
 
         $this->process()->shouldReturn([
-            $activity1, $activity2, $activity3
+            $activity1
         ]);
     }
 }

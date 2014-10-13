@@ -19,22 +19,19 @@ class DistanceFilterSpec extends ObjectBehavior
         $activity2->getDistance()->willReturn(8000);
         $activity3->getDistance()->willReturn(100);
 
-        $this->setActivities([
-            $activity1, $activity2, $activity3
-        ]);
     }
 
     function it_filters_based_on_distance(Activity $activity1, Activity $activity2, Activity $activity3)
     {
         $this->setOptions(['distance' => 5000, 'operator' => '>']);
 
-        $this->filter()->shouldReturn([
+        $this->filter([$activity1, $activity2, $activity3])->shouldReturn([
             $activity2,
         ]);
 
         $this->setOptions(['distance' => 10000, 'operator' => '<']);
 
-        $this->filter()->shouldReturn([
+        $this->filter([$activity1, $activity2, $activity3])->shouldReturn([
             $activity1,
             $activity2,
             $activity3,
@@ -42,7 +39,7 @@ class DistanceFilterSpec extends ObjectBehavior
 
         $this->setOptions(['distance' => 100, 'operator' => '>=']);
 
-        $this->filter()->shouldReturn([
+        $this->filter([$activity1, $activity2, $activity3])->shouldReturn([
             $activity1,
             $activity2,
             $activity3,
@@ -50,15 +47,15 @@ class DistanceFilterSpec extends ObjectBehavior
 
         $this->setOptions(['distance' => 5000, 'operator' => '<=']);
 
-        $this->filter()->shouldReturn([
+        $this->filter([$activity1, $activity2, $activity3])->shouldReturn([
             $activity1,
             $activity3,
         ]);
     }
 
-    function it_throws_an_exception_for_unknown_operators()
+    function it_throws_an_exception_for_unknown_operators(Activity $activity1, Activity $activity2)
     {
         $this->setOptions(['distance' => 1000, 'operator' => '*']);
-        $this->shouldThrow('\InvalidArgumentException')->duringFilter();
+        $this->shouldThrow('\InvalidArgumentException')->duringFilter([$activity1, $activity2]);
     }
 }
