@@ -113,12 +113,4 @@ class ActivityProcessorSpec extends ObjectBehavior
 
         $this->process($existing, $activities)->shouldReturn([$activity1]);
     }
-
-    function it_syncs_new_activities(ActivitySync $sync, Activity $activity1, Activity $activity2, Activity $activity3)
-    {
-        $existing = [];
-        $activities = [$activity1, $activity2, $activity3];
-        $sync->sync($existing, $activities)->shouldBeCalled();
-        $this->sync($existing, $activities)->shouldReturn($activities);
-    }
 }

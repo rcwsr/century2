@@ -109,7 +109,7 @@ class ActivityWorkerCommand extends WorkerCommand
         ]);
 
         $activities = $this->processor
-            ->setFilters($filter)
+            ->setFilters([$filter])
             ->process($existing_activities, $activities);
 
 
