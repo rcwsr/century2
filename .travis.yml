@@ -4,7 +4,7 @@ services:
   - mongodb
 
 before_script:
-  - phpenv config-add php.ini
+  - echo "extension=mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - composer self-update
 
 php:
