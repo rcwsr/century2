@@ -9,6 +9,7 @@ php:
 
 before_script:
   - echo "extension = mongo.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
   - composer self-update
   - composer install --no-interaction --dev
 
