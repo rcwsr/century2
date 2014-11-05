@@ -1,3 +1,6 @@
 century_century_homepage:
     path:     /
     defaults: { _controller: CenturyCenturyBundle:Default:index }
+century_century_rides:
+    path:     /rides
+    defaults: { _controller: CenturyCenturyBundle:Default:rides }

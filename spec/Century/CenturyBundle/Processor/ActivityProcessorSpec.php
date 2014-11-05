@@ -4,6 +4,9 @@ namespace spec\Century\CenturyBundle\Processor;
 
 use Century\CenturyBundle\Document\Activity;
 use Century\CenturyBundle\Filter\DistanceFilter;
+use Century\CenturyBundle\Sync\ActivitySync;
+use Century\CenturyBundle\Sync\SyncInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -14,66 +17,17 @@ class ActivityProcessorSpec extends ObjectBehavior
         $this->shouldHaveType('Century\CenturyBundle\Processor\ActivityProcessor');
     }
 
-    public function let(DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3)
+    public function let(ActivitySync $sync, DocumentManager $documentManager, DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
     {
+        $this->beConstructedWith($sync, $documentManager);
+
         $activity1->getDistance()->willReturn(5000);
         $activity2->getDistance()->willReturn(8000);
         $activity3->getDistance()->willReturn(100);
 
-        $distance_filter1->setOptions([]);
-        $distance_filter1->filter([])->willReturn([]);
-        $distance_filter2->setOptions([]);
-        $distance_filter2->filter([])->willReturn([]);
+        $existing_activity1->getDistance()->willReturn(1000);
+        $existing_activity1->getDistance()->willReturn(2000);
 
-        $this->setFilters([
-            $distance_filter1,
-            $distance_filter2
-        ]);
-
-        $this->setData([
-            $activity1, $activity2, $activity3
-        ]);
-    }
-
-    public function it_throws_an_exception_if_given_non_filter_obj(\stdClass $obj, $distance_filter1, $distance_filter2)
-    {
-        $this->shouldThrow('\InvalidArgumentException')->duringSetFilters([$obj, $distance_filter1, $distance_filter2]);
-    }
-
-    public function it_can_work_without_any_filters(Activity $activity1, Activity $activity2, Activity $activity3)
-    {
-        $this->shouldNotThrow('\InvalidArgumentException')->duringSetFilters([]);
-
-
-        $this->process()->shouldReturn([
-            $activity1, $activity2, $activity3
-        ]);
-    }
-
-    function it_can_filter_activities_with_one_filter(DistanceFilter $distance_filter1, Activity $activity1, Activity $activity2, Activity $activity3)
-    {
-        $distance_filter1->setOptions([
-            'distance' => 100,
-            'operator' => '>',
-        ]);
-
-        $this->setFilters([
-            $distance_filter1,
-        ]);
-
-        $distance_filter1->filter([
-            $activity1, $activity2, $activity3
-        ])->willReturn(
-            [$activity1, $activity2]
-        );
-
-        $this->process()->shouldReturn([
-            $activity1, $activity2
-        ]);
-    }
-
-    function it_can_filter_activities_with_multiple_filters(DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3)
-    {
         $distance_filter1->setOptions([
             'distance' => 100,
             'operator' => '>',
@@ -84,6 +38,57 @@ class ActivityProcessorSpec extends ObjectBehavior
             'operator' => '<',
         ]);
 
+        $distance_filter1->filter([])->willReturn([]);
+        $distance_filter2->filter([])->willReturn([]);
+
+        $this->setFilters([
+            $distance_filter1,
+            $distance_filter2
+        ]);
+
+    }
+
+    public function it_throws_an_exception_if_given_non_filter_obj(\stdClass $obj, $distance_filter1, $distance_filter2)
+    {
+        $this->shouldThrow('\InvalidArgumentException')->duringSetFilters([$obj, $distance_filter1, $distance_filter2]);
+    }
+
+    public function it_can_work_without_any_filters(SyncInterface $sync, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    {
+        $this->shouldNotThrow('\InvalidArgumentException')->duringSetFilters([]);
+
+        $existing = [$existing_activity1, $existing_activity2];
+
+        $activities = [$activity1, $activity2, $activity3];
+
+        $sync->sync($existing, $activities)->willReturn($activities);
+
+        $this->process($existing, $activities)->shouldReturn($activities);
+    }
+
+    function it_can_filter_activities_with_one_filter(SyncInterface $sync, DistanceFilter $distance_filter1, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    {
+        $this->setFilters([
+            $distance_filter1,
+        ]);
+
+        $distance_filter1->filter([
+            $activity1, $activity2, $activity3
+        ])->willReturn(
+            [$activity1, $activity2]
+        );
+
+        $existing = [$existing_activity1, $existing_activity2];
+        $activities = [$activity1, $activity2, $activity3];
+        $sync->sync($existing, $activities)->willReturn($activities);
+
+        $this->process($existing, $activities)->shouldReturn([
+            $activity1, $activity2
+        ]);
+    }
+
+    function it_can_filter_activities_with_multiple_filters(SyncInterface $sync, DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    {
         $this->setFilters([
             $distance_filter1,
             $distance_filter2,
@@ -93,17 +98,27 @@ class ActivityProcessorSpec extends ObjectBehavior
         $distance_filter1->filter([
             $activity1, $activity2, $activity3
         ])->willReturn([
-            $activity1, $activity2]
+                $activity1, $activity2]
         );
 
         $distance_filter2->filter([
             $activity1, $activity2
         ])->willReturn([
-            $activity1]
+                $activity1]
         );
 
-        $this->process()->shouldReturn([
-            $activity1
-        ]);
+        $existing = [$existing_activity1, $existing_activity2];
+        $activities = [$activity1, $activity2, $activity3];
+        $sync->sync($existing, $activities)->willReturn($activities);
+
+        $this->process($existing, $activities)->shouldReturn([$activity1]);
+    }
+
+    function it_syncs_new_activities(ActivitySync $sync, Activity $activity1, Activity $activity2, Activity $activity3)
+    {
+        $existing = [];
+        $activities = [$activity1, $activity2, $activity3];
+        $sync->sync($existing, $activities)->shouldBeCalled();
+        $this->sync($existing, $activities)->shouldReturn($activities);
     }
 }

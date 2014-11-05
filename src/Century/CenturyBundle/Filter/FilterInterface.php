@@ -6,7 +6,7 @@ interface FilterInterface
 {
     /**
      * @param array $activities
-     * @return array
+     * @return mixed
      */
     public function filter(array $activities);
 

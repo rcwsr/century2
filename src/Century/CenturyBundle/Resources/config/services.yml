@@ -20,12 +20,14 @@ services:
     century.consumer.strava:
         class: Century\CenturyBundle\Consumer\StravaConsumer
         arguments: [@guzzle]
+    century.sync.activity:
+        class: Century\CenturyBundle\Sync\ActivitySync
     century.processor.activity:
         class: Century\CenturyBundle\Processor\ActivityProcessor
-        arguments: []
+        arguments: [@century.sync.activity, @doctrine.odm.mongodb.document_manager]
     century.command.worker.activity:
         class: Century\CenturyBundle\Command\ActivityWorkerCommand
-        arguments: [@century.consumer.strava, @century.processor.activity, @validator]
+        arguments: [@century.consumer.strava, @century.processor.activity, @validator, @doctrine.odm.mongodb.document_manager]
         tags:
             -  { name: console.command }
 

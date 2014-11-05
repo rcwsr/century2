@@ -33,6 +33,13 @@ class Activity
     protected $date;
 
     /**
+     * @var User
+     * @ODM\ReferenceOne(targetDocument="Century\CenturyBundle\Document\User")
+     */
+    protected $user;
+
+
+    /**
      * Set distance
      *
      * @param string $distance
@@ -57,10 +64,10 @@ class Activity
     /**
      * Set date
      *
-     * @param date $date
+     * @param \DateTime $date $date
      * @return self
      */
-    public function setDate($date)
+    public function setDate(\DateTime $date)
     {
         $this->date = $date;
         return $this;
@@ -69,7 +76,7 @@ class Activity
     /**
      * Get date
      *
-     * @return date $date
+     * @return \DateTime $date
      */
     public function getDate()
     {
@@ -111,6 +118,18 @@ class Activity
     }
 
     /**
+     * Set internal id
+     *
+     * @param int $id
+     * @return self
+     */
+    public function setInternalId($id)
+    {
+        $this->internal_id = $id;
+        return $this;
+    }
+
+    /**
      * Set id
      *
      * @param int $id
@@ -130,5 +149,20 @@ class Activity
     public function getId()
     {
         return $this->id;
+    }
+
+    public function hash()
+    {
+        return md5(sprintf('%d_%d', $this->id, $this->distance));
+    }
+
+    public function equals(Activity $activity)
+    {
+        return $activity->hash() === $this->hash();
+    }
+
+    public function __toString()
+    {
+        return $this->hash();
     }
 }

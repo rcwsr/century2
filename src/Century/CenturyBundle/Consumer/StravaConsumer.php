@@ -3,8 +3,11 @@
 namespace Century\CenturyBundle\Consumer;
 
 use Buzz\Client\ClientInterface;
+use Century\CenturyBundle\Document\Activity;
+use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class StravaConsumer implements ConsumerInterface
 {
@@ -27,9 +30,13 @@ class StravaConsumer implements ConsumerInterface
     /**
      * Gets the activities of the currently authorised strava user
      *
+     * @param $token
+     * @param \DateTime $from
+     * @param \DateTime $to
+     * @param UserInterface $user
      * @return array
      */
-    public function getActivities($token, \DateTime $from, \DateTime $to)
+    public function getActivities($token, \DateTime $from, \DateTime $to, UserInterface $user)
     {
         $activities = [];
         $page = 1;
@@ -37,6 +44,7 @@ class StravaConsumer implements ConsumerInterface
 
         while($entries){
 
+            /** @noinspection PhpVoidFunctionResultUsedInspection */
             $response = $this->http->get(self::API_URL . 'athlete/activities', [
                 'query' => [
                     'access_token' => $token,
@@ -51,7 +59,14 @@ class StravaConsumer implements ConsumerInterface
                 $entries = false;
             }
 
-            foreach($response as $activity){
+            foreach($response as $activity_raw){
+                $activity = new Activity();
+                $activity
+                    ->setId($activity_raw['id'])
+                    ->setDate(new \DateTime($activity_raw['start_date']))
+                    ->setDistance($activity_raw['distance'])
+                    ->setUser($user);
+
                 $activities[] = $activity;
             }
         }

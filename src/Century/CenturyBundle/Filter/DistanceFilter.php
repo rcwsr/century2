@@ -36,7 +36,7 @@ class DistanceFilter implements FilterInterface
                     if ($distance >= $this->distance)
                         $filtered_activities[] = $activity;
                     break;
-                default: throw new \InvalidArgumentException();
+                default: throw new \InvalidArgumentException(sprintf('Operator "%s" not found', $this->operator));
             }
         }
 

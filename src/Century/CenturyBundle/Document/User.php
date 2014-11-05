@@ -108,7 +108,7 @@ class User implements UserInterface
      */
     public function getUsername()
     {
-        return $this->strava_id;
+        return $this->id;
     }
 
     /**
@@ -124,7 +124,7 @@ class User implements UserInterface
      */
     public function equals(UserInterface $user)
     {
-        return $user->getUsername() === $this->strava_id;
+        return $user->getUsername() === $this->getUsername();
     }
 
     /**
