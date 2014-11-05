@@ -18,8 +18,8 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
-    strava_id: ~
-    strava_secret: ~
+    strava_id: 123
+    strava_secret: thisismystravasecret
 
     mongo_database_password:  ~
     mongo_database_user: ~
