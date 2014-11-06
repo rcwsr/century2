@@ -2,9 +2,6 @@
 
 namespace Century\CenturyBundle\Document;
 
-use Century\CenturyBundle\Document\Activity;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -80,12 +77,6 @@ class User implements UserInterface
      * @ODM\String
      */
     protected $email;
-
-    /**
-     * @var array
-     * @ODM\EmbedMany(targetDocument="Century\CenturyBundle\Document\Activity")
-     */
-    protected $activities;
 
     /**
      * {@inheritDoc}
@@ -337,40 +328,8 @@ class User implements UserInterface
     {
         return $this->firstname;
     }
-    public function __construct()
-    {
-        $this->activities = new ArrayCollection();
-    }
 
-    /**
-     * Add activity
-     *
-     * @param Activity $activity
-     */
-    public function addActivity(Activity $activity)
-    {
-        $this->activities[] = $activity;
-    }
-
-    /**
-     * Remove activity
-     *
-     * @param Activity $activity
-     */
-    public function removeActivity(Activity $activity)
-    {
-        $this->activities->removeElement($activity);
-    }
-
-    /**
-     * Get activities
-     *
-     * @return Collection $activities
-     */
-    public function getActivities()
-    {
-        return $this->activities;
-    }
+    public function __construct(){}
 
     /**
      * Get internalId

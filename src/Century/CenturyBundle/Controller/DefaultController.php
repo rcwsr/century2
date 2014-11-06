@@ -30,10 +30,11 @@ class DefaultController extends Controller
 
 //        $user = $user_repo->findOneBy(['internal_id' => '545a401810f0ed04048b4567']);
 //        var_dump($user->getId());
-        $rides = $repo->findBy(['user.internal_id' => $this->getUser()->getInternalId()]);
+//        $rides = $repo->findBy(['user.internal_id' => $this->getUser()->getInternalId()]);
+        $rides = $repo->findAll();
 
         foreach($rides as $ride){
-           var_dump($ride->getUser()->getInternalId());
+//           var_dump($ride->getUser()->getInternalId());
             $om->remove($ride);
         }
         $om->flush();

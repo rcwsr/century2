@@ -60,17 +60,27 @@ class StravaConsumer implements ConsumerInterface
             }
 
             foreach($response as $activity_raw){
-                $activity = new Activity();
-                $activity
-                    ->setId($activity_raw['id'])
-                    ->setDate(new \DateTime($activity_raw['start_date']))
-                    ->setDistance($activity_raw['distance'])
-                    ->setUser($user);
-
-                $activities[] = $activity;
+                $activities[] = $this->createActivity($user, $activity_raw);
             }
         }
 
         return $activities;
+    }
+
+    /**
+     * @param $user
+     * @param $activity_raw
+     * @return Activity
+     */
+    private function createActivity($user, $activity_raw)
+    {
+        $activity = new Activity();
+        $activity
+            ->setId($activity_raw['id'])
+            ->setDate(new \DateTime($activity_raw['start_date']))
+            ->setDistance($activity_raw['distance'])
+            ->setUser($user)
+        ;
+        return $activity;
     }
 }
