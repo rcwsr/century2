@@ -2,6 +2,7 @@
 
 namespace Century\CenturyBundle\Document;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -77,6 +78,12 @@ class User implements UserInterface
      * @ODM\String
      */
     protected $email;
+
+    /**
+     * @var Club[]
+     * @ODM\ReferenceMany(targetDocument="Century\CenturyBundle\Document\Club")
+     */
+    protected $clubs;
 
     /**
      * {@inheritDoc}
@@ -361,5 +368,35 @@ class User implements UserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Add club
+     *
+     * @param Club $club
+     */
+    public function addClub(Club $club)
+    {
+        $this->clubs[] = $club;
+    }
+
+    /**
+     * Remove club
+     *
+     * @param Club $club
+     */
+    public function removeClub(Club $club)
+    {
+        $this->clubs->removeElement($club);
+    }
+
+    /**
+     * Get clubs
+     *
+     * @return Collection $clubs
+     */
+    public function getClubs()
+    {
+        return $this->clubs;
     }
 }

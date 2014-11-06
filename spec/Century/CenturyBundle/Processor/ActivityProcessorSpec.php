@@ -4,8 +4,7 @@ namespace spec\Century\CenturyBundle\Processor;
 
 use Century\CenturyBundle\Document\Activity;
 use Century\CenturyBundle\Filter\DistanceFilter;
-use Century\CenturyBundle\Sync\ActivitySync;
-use Century\CenturyBundle\Sync\SyncInterface;
+use Century\CenturyBundle\Sync\SynchronizerInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -17,7 +16,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         $this->shouldHaveType('Century\CenturyBundle\Processor\ActivityProcessor');
     }
 
-    public function let(ActivitySync $sync, DocumentManager $documentManager, DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    public function let(SynchronizerInterface $sync, DocumentManager $documentManager, DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
     {
         $this->beConstructedWith($sync, $documentManager);
 
@@ -53,7 +52,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         $this->shouldThrow('\InvalidArgumentException')->duringSetFilters([$obj, $distance_filter1, $distance_filter2]);
     }
 
-    public function it_can_work_without_any_filters(SyncInterface $sync, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    public function it_can_work_without_any_filters(SynchronizerInterface $sync, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
     {
         $this->shouldNotThrow('\InvalidArgumentException')->duringSetFilters([]);
 
@@ -66,7 +65,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         $this->process($existing, $activities)->shouldReturn($activities);
     }
 
-    function it_can_filter_activities_with_one_filter(SyncInterface $sync, DistanceFilter $distance_filter1, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    function it_can_filter_activities_with_one_filter(SynchronizerInterface $sync, DistanceFilter $distance_filter1, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
     {
         $this->setFilters([
             $distance_filter1,
@@ -87,7 +86,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         ]);
     }
 
-    function it_can_filter_activities_with_multiple_filters(SyncInterface $sync, DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
+    function it_can_filter_activities_with_multiple_filters(SynchronizerInterface $sync, DistanceFilter $distance_filter1, DistanceFilter $distance_filter2, Activity $activity1, Activity $activity2, Activity $activity3, Activity $existing_activity1, Activity $existing_activity2)
     {
         $this->setFilters([
             $distance_filter1,

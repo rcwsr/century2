@@ -3,6 +3,7 @@
 namespace Century\CenturyBundle\Processor;
 
 use Century\CenturyBundle\Filter\FilterInterface;
+use Century\CenturyBundle\Sync\SynchronizerInterface;
 use Century\CenturyBundle\Sync\SyncInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -15,15 +16,15 @@ class ActivityProcessor implements ProcessorInterface
      */
     private $objectManager;
     /**
-     * @var SyncInterface
+     * @var SynchronizerInterface
      */
     private $sync;
 
     /**
-     * @param SyncInterface $sync
+     * @param SynchronizerInterface $sync
      * @param ObjectManager $objectManager
      */
-    public function __construct(SyncInterface $sync, ObjectManager $objectManager)
+    public function __construct(SynchronizerInterface $sync, ObjectManager $objectManager)
     {
         $this->objectManager = $objectManager;
         $this->sync = $sync;

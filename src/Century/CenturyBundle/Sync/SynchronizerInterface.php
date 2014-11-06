@@ -2,7 +2,7 @@
 
 namespace Century\CenturyBundle\Sync;
 
-interface SyncInterface
+interface SynchronizerInterface
 {
     public function sync(array $existing, array $data);
 } 

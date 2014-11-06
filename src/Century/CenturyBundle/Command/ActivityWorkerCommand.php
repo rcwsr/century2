@@ -29,10 +29,6 @@ class ActivityWorkerCommand extends WorkerCommand
      */
     private $processor;
     /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-    /**
      * @var ObjectManager
      */
     private $objectManager;
@@ -41,14 +37,12 @@ class ActivityWorkerCommand extends WorkerCommand
     /**
      * @param ConsumerInterface $consumer
      * @param ActivityProcessor $processor
-     * @param ValidatorInterface $validator
      */
-    public function __construct(ConsumerInterface $consumer, ActivityProcessor $processor, ValidatorInterface $validator, ObjectManager $objectManager)
+    public function __construct(ConsumerInterface $consumer, ActivityProcessor $processor, ObjectManager $objectManager)
     {
         parent::__construct(null);
         $this->consumer = $consumer;
         $this->processor = $processor;
-        $this->validator = $validator;
         $this->objectManager = $objectManager;
     }
 

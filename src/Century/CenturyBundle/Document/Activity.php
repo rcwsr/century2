@@ -3,12 +3,13 @@
 namespace Century\CenturyBundle\Document;
 
 use Century\CenturyBundle\Document\User;
+use Century\CenturyBundle\Sync\Model\SynchronizableInterface;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document
  */
-class Activity
+class Activity implements SynchronizableInterface
 {
 
     /**
@@ -156,7 +157,7 @@ class Activity
         return md5(sprintf('%d_%d', $this->id, $this->distance));
     }
 
-    public function equals(Activity $activity)
+    public function equals(SynchronizableInterface $activity)
     {
         return $activity->hash() === $this->hash();
     }
