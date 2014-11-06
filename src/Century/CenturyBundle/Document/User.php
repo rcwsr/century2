@@ -14,7 +14,7 @@ class User implements UserInterface
     /**
      * @ODM\Id
      */
-    protected $id;
+    protected $internal_id;
 
     /**
      * @var int
@@ -22,7 +22,7 @@ class User implements UserInterface
      * @ODM\Int
      * @ODM\Index(unique=true)
      */
-    protected $strava_id;
+    protected $id;
 
     /**
      * @var string
@@ -79,38 +79,6 @@ class User implements UserInterface
     protected $email;
 
     /**
-     * Get id
-     *
-     * @return id $id
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set stravaId
-     *
-     * @param int $stravaId
-     * @return self
-     */
-    public function setStravaId($stravaId)
-    {
-        $this->strava_id = $stravaId;
-        return $this;
-    }
-
-    /**
-     * Get stravaId
-     *
-     * @return int $stravaId
-     */
-    public function getStravaId()
-    {
-        return $this->strava_id;
-    }
-
-    /**
      * {@inheritDoc}
      */
     public function getPassword()
@@ -131,7 +99,7 @@ class User implements UserInterface
      */
     public function getUsername()
     {
-        return $this->strava_id;
+        return $this->id;
     }
 
     /**
@@ -147,7 +115,7 @@ class User implements UserInterface
      */
     public function equals(UserInterface $user)
     {
-        return $user->getUsername() === $this->strava_id;
+        return $user->getUsername() === $this->getUsername();
     }
 
     /**
@@ -359,5 +327,39 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->firstname;
+    }
+
+    public function __construct(){}
+
+    /**
+     * Get internalId
+     *
+     * @return id $internalId
+     */
+    public function getInternalId()
+    {
+        return $this->internal_id;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int $id
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

@@ -12,3 +12,7 @@
 /.idea
 /.idea/*
 /npm-debug.log
+/web/css/
+/web/js/
+/web/config.php
+/web/app_dev.php

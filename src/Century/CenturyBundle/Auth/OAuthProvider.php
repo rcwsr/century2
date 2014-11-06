@@ -21,7 +21,7 @@ class OAuthProvider extends OAuthUserProvider
     public function loadUserByUsername($username)
     {
         $user_repo = $this->om->getRepository('CenturyCenturyBundle:User');
-        $user = $user_repo->findOneBy(['strava_id' => $username]);
+        $user = $user_repo->findOneBy(['id' => $username]);
 
         if (!$user) {
             throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
@@ -34,7 +34,7 @@ class OAuthProvider extends OAuthUserProvider
     {
 
         $user_repo = $this->om->getRepository('CenturyCenturyBundle:User');
-        $user = $user_repo->findOneBy(['strava_id' => $response->getUserName()]);
+        $user = $user_repo->findOneBy(['id' => $response->getUserName()]);
 
         if ($user) {
             $user = $this->assignUserProperties($user, $response);
@@ -42,7 +42,7 @@ class OAuthProvider extends OAuthUserProvider
 
         } else {
             $user = new User();
-            $user->setStravaId($response->getUsername());
+            $user->setId($response->getUsername());
             $user = $this->assignUserProperties($user, $response);
 
         }
