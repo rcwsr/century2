@@ -84,5 +84,17 @@ class SynchronizerSpec extends ObjectBehavior
         $this->shouldThrow('Century\CenturyBundle\Exception\UnsynchronizableException')->duringSync([1], [$obj1]);
     }
 
-    
+    public function it_prepares_an_array_of_objects_to_delete(SynchronizableInterface $modified_obj1, SynchronizableInterface $obj1, SynchronizableInterface $obj2, SynchronizableInterface $obj3, SynchronizableInterface $existing_obj1, SynchronizableInterface $existing_obj2)
+    {
+        $existing = [$existing_obj1, $existing_obj2];
+
+        $existing_obj1->equals(Argument::any())->willReturn(true);
+        $existing_obj2->equals(Argument::any())->willReturn(true);
+
+        $this->sync($existing,
+            [$existing_obj1, $obj1, $obj2, $obj3]
+        )->shouldReturn([$obj1, $obj2, $obj3]);
+
+        $this->getTrash()->shouldReturn([$existing_obj2]);
+    }
 }

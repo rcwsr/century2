@@ -61,6 +61,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         $activities = [$activity1, $activity2, $activity3];
 
         $sync->sync($existing, $activities)->willReturn($activities);
+        $sync->getTrash()->willReturn([]);
 
         $this->process($existing, $activities)->shouldReturn($activities);
     }
@@ -80,6 +81,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         $existing = [$existing_activity1, $existing_activity2];
         $activities = [$activity1, $activity2, $activity3];
         $sync->sync($existing, $activities)->willReturn($activities);
+        $sync->getTrash()->willReturn([]);
 
         $this->process($existing, $activities)->shouldReturn([
             $activity1, $activity2
@@ -109,6 +111,7 @@ class ActivityProcessorSpec extends ObjectBehavior
         $existing = [$existing_activity1, $existing_activity2];
         $activities = [$activity1, $activity2, $activity3];
         $sync->sync($existing, $activities)->willReturn($activities);
+        $sync->getTrash()->willReturn([]);
 
         $this->process($existing, $activities)->shouldReturn([$activity1]);
     }

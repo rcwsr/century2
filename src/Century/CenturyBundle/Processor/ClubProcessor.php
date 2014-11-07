@@ -32,4 +32,11 @@ class ClubProcessor extends Processor
         $this->user = $user;
         return $this;
     }
+
+    protected function remove(array $data)
+    {
+        foreach($data as $object){
+            $this->user->removeClub($object);
+        }
+    }
 }

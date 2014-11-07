@@ -6,6 +6,6 @@
 ##Todo
 
 - [x] Syncronize user's rides
-- [ ] Syncronize user's clubs
+- [x] Syncronize user's clubs
 - [ ] UI
-- [ ] Figure out how to remove deleted activites/clubs
+- [x] Figure out how to remove deleted activites/clubs

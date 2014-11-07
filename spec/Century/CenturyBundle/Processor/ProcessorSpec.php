@@ -25,6 +25,7 @@ class ProcessorSpec extends ObjectBehavior
     public function it_processes_empty_arrays_without_error(Synchronizer $sync)
     {
         $sync->sync([], [])->willReturn([]);
+        $sync->getTrash()->willReturn([]);
         $this->process([], [])->shouldReturn([]);
     }
 

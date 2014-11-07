@@ -48,6 +48,10 @@ class ActivityProcessor extends Processor
         $data = $this->sync($existing, $data);
         $data = $this->filter($data);
         $data = $this->persist($data);
+
+        $this->remove($this->sync->getTrash());
+
+        $this->objectManager->flush();
         return $data;
     }
 }

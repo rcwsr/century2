@@ -39,14 +39,24 @@ class Processor implements ProcessorInterface
 
     /**
      * @param array $data
+     */
+    protected function remove(array $data)
+    {
+        foreach($data as $object){
+            $this->objectManager->remove($object);
+        }
+    }
+
+    /**
+     * @param array $data
      * @return array
      */
     protected function persist(array $data)
     {
         foreach($data as $object){
             $this->objectManager->persist($object);
-            $this->objectManager->flush();
         }
+
         return $data;
     }
 
@@ -59,6 +69,10 @@ class Processor implements ProcessorInterface
     {
         $data = $this->sync($existing, $data);
         $data = $this->persist($data);
+
+        $this->remove($this->sync->getTrash());
+
+        $this->objectManager->flush();
         return $data;
     }
 }
