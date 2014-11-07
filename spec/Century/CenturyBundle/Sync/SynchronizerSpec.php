@@ -71,10 +71,18 @@ class SynchronizerSpec extends ObjectBehavior
         $this->shouldNotThrow('\Exception')->duringSync($existing, []);
     }
 
+    function it_handles_no_data_without_error()
+    {
+        $this->sync([], [])->shouldReturn([]);
+        $this->shouldNotThrow('\Exception')->duringSync([], []);
+    }
+
     function it_throws_an_exception_if_incorrect_sync_obj_given(SynchronizableInterface $obj1)
     {
         $this->shouldThrow('Century\CenturyBundle\Exception\UnsynchronizableException')->duringSync([], [$obj1, "string"]);
         $this->shouldThrow('Century\CenturyBundle\Exception\UnsynchronizableException')->duringSync([$obj1, new \stdClass()], []);
         $this->shouldThrow('Century\CenturyBundle\Exception\UnsynchronizableException')->duringSync([1], [$obj1]);
     }
+
+    
 }

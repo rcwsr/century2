@@ -38,21 +38,19 @@ class OAuthProvider extends OAuthUserProvider
 
         if ($user) {
             $user = $this->assignUserProperties($user, $response);
-
-
         } else {
             $user = new User();
             $user->setId($response->getUsername());
             $user = $this->assignUserProperties($user, $response);
-
         }
+
+        //do clubs
 
         $this->om->persist($user);
         $this->om->flush();
 
         return $user;
     }
-
 
     public function assignUserProperties($user, $response)
     {
@@ -66,9 +64,9 @@ class OAuthProvider extends OAuthUserProvider
             ->setState($response->getState())
             ->setCountry($response->getCountry())
             ->setMeasurement($response->getMeasurement());
+
         return $user;
     }
-
 
     public function supportsClass($class)
     {

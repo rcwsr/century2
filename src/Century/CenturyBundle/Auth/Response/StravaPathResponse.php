@@ -42,6 +42,11 @@ class StravaPathResponse extends PathUserResponse
         return $this->getValueForPath('lastname');
     }
 
+    public function getClubs()
+    {
+        return $this->getValueForPath('clubs');
+    }
+
 
 
 } 

@@ -4,6 +4,8 @@ namespace Century\CenturyBundle\Consumer;
 
 use Buzz\Client\ClientInterface;
 use Century\CenturyBundle\Document\Activity;
+use Century\CenturyBundle\Document\Club;
+use Century\CenturyBundle\Document\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\Client;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -42,7 +44,7 @@ class StravaConsumer implements ConsumerInterface
         $page = 1;
         $entries = true;
 
-        while($entries){
+        while ($entries) {
 
             /** @noinspection PhpVoidFunctionResultUsedInspection */
             $response = $this->http->get(self::API_URL . 'athlete/activities', [
@@ -55,11 +57,11 @@ class StravaConsumer implements ConsumerInterface
                 ]
             ])->json();
 
-            if(count($response) == 0){
+            if (count($response) == 0) {
                 $entries = false;
             }
 
-            foreach($response as $activity_raw){
+            foreach ($response as $activity_raw) {
                 $activities[] = $this->createActivity($user, $activity_raw);
             }
         }
@@ -79,8 +81,44 @@ class StravaConsumer implements ConsumerInterface
             ->setId($activity_raw['id'])
             ->setDate(new \DateTime($activity_raw['start_date']))
             ->setDistance($activity_raw['distance'])
-            ->setUser($user)
-        ;
+            ->setUser($user);
+
         return $activity;
+    }
+
+    /**
+     * @param $token
+     * @return array
+     */
+    public function getClubs($token)
+    {
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        $response = $this->http->get(self::API_URL . 'athlete/clubs', [
+            'query' => [
+                'access_token' => $token,
+            ]
+        ])->json();
+        
+        $clubs = [];
+        foreach ($response as $club_raw) {
+            $clubs[] = $this->createClub($club_raw);
+        }
+
+        return $clubs;
+    }
+
+    /**
+     * @param $club_raw
+     * @return Club
+     */
+    private function createClub($club_raw)
+    {
+        $club = new Club();
+        $club
+            ->setId($club_raw['id'])
+            ->setName($club_raw['name'])
+            ->setProfilePicture($club_raw['profile']);
+
+        return $club;
     }
 }

@@ -1,20 +1,20 @@
 <?php
 
-
 namespace Century\CenturyBundle\Command;
-
 
 use Century\CenturyBundle\Consumer\ConsumerInterface;
 use Century\CenturyBundle\Document\Activity;
 use Century\CenturyBundle\Filter\DistanceFilter;
 use Century\CenturyBundle\Processor\ActivityProcessor;
+use Century\CenturyBundle\Processor\ClubProcessor;
+use Century\CenturyBundle\Processor\ProcessorInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityNotFoundException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Vivait\WorkerCommandBundle\Command\WorkerCommand;
 
-class ActivityWorkerCommand extends WorkerCommand
+class UserClubWorkerCommand extends WorkerCommand
 {
     /**
      * @var ConsumerInterface
@@ -29,13 +29,12 @@ class ActivityWorkerCommand extends WorkerCommand
      */
     private $objectManager;
 
-
     /**
      * @param ConsumerInterface $consumer
-     * @param ActivityProcessor $processor
+     * @param ClubProcessor $processor
      * @param ObjectManager $objectManager
      */
-    public function __construct(ConsumerInterface $consumer, ActivityProcessor $processor, ObjectManager $objectManager)
+    public function __construct(ConsumerInterface $consumer, ClubProcessor $processor, ObjectManager $objectManager)
     {
         parent::__construct(null);
         $this->consumer = $consumer;
@@ -50,7 +49,7 @@ class ActivityWorkerCommand extends WorkerCommand
      */
     protected function setCommandNamespace()
     {
-        return "century:worker:activities";
+        return "century:worker:clubs:user";
     }
 
     /**
@@ -74,36 +73,24 @@ class ActivityWorkerCommand extends WorkerCommand
     {
         $data = \GuzzleHttp\json_decode($payload);
 
-        $from = \DateTime::createFromFormat('U', $data->from);
-        $to = \DateTime::createFromFormat('U', $data->to);
-
         $user_repo = $this->objectManager->getRepository('CenturyCenturyBundle:User');
-        $activity_repo = $this->objectManager->getRepository('CenturyCenturyBundle:Activity');
+
         $user = $user_repo->find($data->user);
 
         if (!$user) {
             throw new EntityNotFoundException(sprintf('Could not find user by ID: "%s"', $data->user));
         }
 
-        $existing_activities = $activity_repo->findBy(['user.internal_id' => $user->getInternalId()]);
+        $existing_clubs = $user->getClubs()->toArray();
 
-        //Gets all activities for a certain date period
-        $activities = $this->consumer->getActivities($data->token, $from, $to, $user);
+        $clubs = $this->consumer->getClubs($data->token);
 
-        $output->writeln(sprintf("Processing %d activities against %d existing activities", count($activities), count($existing_activities)));
+        $output->writeln(sprintf("Processing %d clubs against %d existing clubs", count($clubs), count($existing_clubs)));
 
-        //Filters activities with provided filters
-        $filter = new DistanceFilter();
-        $filter->setOptions([
-            'distance' => 100000,
-            'operator' => '>',
-        ]);
+        $this->processor->setUser($user);
+        $clubs = $this->processor->process($existing_clubs, $clubs);
 
-        $activities = $this->processor
-            ->setFilters([$filter])
-            ->process($existing_activities, $activities);
-
-        $output->writeln("Finished: " . count($activities) . " saved");
+        $output->writeln("Finished: " . count($clubs) . "clubs saved");
     }
 
     /**
