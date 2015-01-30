@@ -2,12 +2,11 @@
 
 namespace Century\CenturyBundle\Consumer;
 
-use Buzz\Client\ClientInterface;
 use Century\CenturyBundle\Document\Activity;
 use Century\CenturyBundle\Document\Club;
-use Century\CenturyBundle\Document\User;
-use Doctrine\Common\Collections\ArrayCollection;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use JMS\Serializer\Serializer;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -19,14 +18,20 @@ class StravaConsumer implements ConsumerInterface
     private $http;
 
     const API_URL = 'https://www.strava.com/api/v3/';
+    /**
+     * @var Serializer
+     */
+    private $serializer;
 
 
     /**
-     * @param Client $http
+     * @param Client|ClientInterface $http
+     * @param Serializer $serializer
      */
-    public function __construct(Client $http)
+    public function __construct(ClientInterface $http, Serializer $serializer)
     {
         $this->http = $http;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -61,8 +66,8 @@ class StravaConsumer implements ConsumerInterface
                 $entries = false;
             }
 
-            foreach ($response as $activity_raw) {
-                $activities[] = $this->createActivity($user, $activity_raw);
+            foreach ($response as $activityRaw) {
+                $activities[] = $this->createActivity($user, $activityRaw);
             }
         }
 
@@ -74,16 +79,16 @@ class StravaConsumer implements ConsumerInterface
      * @param $activity_raw
      * @return Activity
      */
-    private function createActivity($user, $activity_raw)
+    private function createActivity($user, $activityRaw)
     {
-        $activity = new Activity();
-        $activity
-            ->setId($activity_raw['id'])
-            ->setDate(new \DateTime($activity_raw['start_date']))
-            ->setDistance($activity_raw['distance'])
-            ->setUser($user);
+//        $activity = new Activity();
+//        $activity
+//            ->setId($activity_raw['id'])
+//            ->setDate(new \DateTime($activity_raw['start_date']))
+//            ->setDistance($activity_raw['distance'])
+//            ->setUser($user);
 
-        return $activity;
+        return $this->serializer->deserialize($activityRaw, 'Century\CenturyBundle\Document\Activity', 'array');
     }
 
     /**

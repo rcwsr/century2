@@ -15,12 +15,12 @@ class Activity implements SynchronizableInterface
     /**
      * @ODM\Id
      */
-    protected $internal_id;
+    protected $id;
 
     /**
      * @ODM\Int()
      */
-    protected $id;
+    protected $stravaId;
 
     /**
      * @var float
@@ -39,45 +39,8 @@ class Activity implements SynchronizableInterface
      */
     protected $user;
 
-
     /**
-     * Set distance
-     *
-     * @param string $distance
-     * @return self
-     */
-    public function setDistance($distance)
-    {
-        $this->distance = $distance;
-        return $this;
-    }
-
-    /**
-     * Get distance
-     *
-     * @return string $distance
-     */
-    public function getDistance()
-    {
-        return $this->distance;
-    }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date $date
-     * @return self
-     */
-    public function setDate(\DateTime $date)
-    {
-        $this->date = $date;
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime $date
+     * @return mixed
      */
     public function getDate()
     {
@@ -85,71 +48,75 @@ class Activity implements SynchronizableInterface
     }
 
     /**
-     * Set user
-     *
-     * @param User $user
-     * @return self
+     * @param mixed $date
      */
-    public function setUser(User $user)
+    public function setDate($date)
     {
-        $this->user = $user;
-        return $this;
+        $this->date = $date;
     }
 
     /**
-     * Get user
-     *
-     * @return User $user
+     * @return float
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param float $distance
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStravaId()
+    {
+        return $this->stravaId;
+    }
+
+    /**
+     * @param mixed $stravaId
+     */
+    public function setStravaId($stravaId)
+    {
+        $this->stravaId = $stravaId;
+    }
+
+    /**
+     * @return User
      */
     public function getUser()
     {
         return $this->user;
     }
 
-
-
     /**
-     * Get internalId
-     *
-     * @return id $internalId
+     * @param User $user
      */
-    public function getInternalId()
+    public function setUser($user)
     {
-        return $this->internal_id;
-    }
-
-    /**
-     * Set internal id
-     *
-     * @param int $id
-     * @return self
-     */
-    public function setInternalId($id)
-    {
-        $this->internal_id = $id;
-        return $this;
-    }
-
-    /**
-     * Set id
-     *
-     * @param int $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int $id
-     */
-    public function getId()
-    {
-        return $this->id;
+        $this->user = $user;
     }
 
     public function hash()

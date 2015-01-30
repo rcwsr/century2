@@ -4,3 +4,6 @@ century_century_homepage:
 century_century_rides:
     path:     /rides
     defaults: { _controller: CenturyCenturyBundle:Default:rides }
+century_century_clubs:
+    path:     /clubs
+    defaults: { _controller: CenturyCenturyBundle:Default:clubs }

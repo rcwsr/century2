@@ -13,12 +13,12 @@ class Club implements SynchronizableInterface
     /**
      * @ODM\Id
      */
-    protected $internal_id;
+    protected $id;
 
     /**
      * @ODM\Int()
      */
-    protected $id;
+    protected $stravaId;
 
     /**
      * @var string
@@ -30,47 +30,10 @@ class Club implements SynchronizableInterface
      * @var string
      * @ODM\String
      */
-    protected $profile_picture;
-
-
-    /**
-     * Get internalId
-     *
-     * @return id $internalId
-     */
-    public function getInternalId()
-    {
-        return $this->internal_id;
-    }
+    protected $profilPicture;
 
     /**
-     * Set id
-     *
-     * @param int $id
-     * @return self
-     */
-    public function setInternalId($id)
-    {
-        $this->internal_id = $id;
-        return $this;
-    }
-
-    /**
-     * Set id
-     *
-     * @param int $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int $id
+     * @return mixed
      */
     public function getId()
     {
@@ -78,21 +41,15 @@ class Club implements SynchronizableInterface
     }
 
     /**
-     * Set name
-     *
-     * @param string $name
-     * @return self
+     * @param mixed $id
      */
-    public function setName($name)
+    public function setId($id)
     {
-        $this->name = $name;
-        return $this;
+        $this->id = $id;
     }
 
     /**
-     * Get name
-     *
-     * @return string $name
+     * @return string
      */
     public function getName()
     {
@@ -100,26 +57,46 @@ class Club implements SynchronizableInterface
     }
 
     /**
-     * Set profilePicture
-     *
-     * @param string $profilePicture
-     * @return self
+     * @param string $name
      */
-    public function setProfilePicture($profilePicture)
+    public function setName($name)
     {
-        $this->profile_picture = $profilePicture;
-        return $this;
+        $this->name = $name;
     }
 
     /**
-     * Get profilePicture
-     *
-     * @return string $profilePicture
+     * @return string
      */
-    public function getProfilePicture()
+    public function getProfilPicture()
     {
-        return $this->profile_picture;
+        return $this->profilPicture;
     }
+
+    /**
+     * @param string $profilPicture
+     */
+    public function setProfilPicture($profilPicture)
+    {
+        $this->profilPicture = $profilPicture;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStravaId()
+    {
+        return $this->stravaId;
+    }
+
+    /**
+     * @param mixed $stravaId
+     */
+    public function setStravaId($stravaId)
+    {
+        $this->stravaId = $stravaId;
+    }
+
+
 
     public function hash()
     {

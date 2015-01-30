@@ -72,36 +72,30 @@ class ActivityWorkerCommand extends WorkerCommand
      */
     protected function performAction($payload, InputInterface $input, OutputInterface $output)
     {
-        $data = \GuzzleHttp\json_decode($payload);
+        $data = json_decode($payload);
 
-        $from = \DateTime::createFromFormat('U', $data->from);
-        $to = \DateTime::createFromFormat('U', $data->to);
-
-        $user_repo = $this->objectManager->getRepository('CenturyCenturyBundle:User');
-        $activity_repo = $this->objectManager->getRepository('CenturyCenturyBundle:Activity');
-        $user = $user_repo->find($data->user);
+        $userRepo = $this->objectManager->getRepository('CenturyCenturyBundle:User');
+        $activityRepo = $this->objectManager->getRepository('CenturyCenturyBundle:Activity');
+        $user = $userRepo->find($data->user);
 
         if (!$user) {
             throw new EntityNotFoundException(sprintf('Could not find user by ID: "%s"', $data->user));
         }
 
-        $existing_activities = $activity_repo->findBy(['user.internal_id' => $user->getInternalId()]);
+        $existingActivities = $activityRepo->findBy(['user.id' => $user->getInternalId()]);
 
         //Gets all activities for a certain date period
-        $activities = $this->consumer->getActivities($data->token, $from, $to, $user);
+        $activities = $this->consumer->getActivities(
+            $data->token,
+            \DateTime::createFromFormat('U', $data->from),
+            \DateTime::createFromFormat('U', $data->to),
+            $user
+        );
 
-        $output->writeln(sprintf("Processing %d activities against %d existing activities", count($activities), count($existing_activities)));
-
-        //Filters activities with provided filters
-        $filter = new DistanceFilter();
-        $filter->setOptions([
-            'distance' => 100000,
-            'operator' => '>',
-        ]);
+        $output->writeln(sprintf("Processing %d activities against %d existing activities", count($activities), count($existingActivities)));
 
         $activities = $this->processor
-            ->setFilters([$filter])
-            ->process($existing_activities, $activities);
+            ->process($existingActivities, $activities);
 
         $output->writeln("Finished: " . count($activities) . " saved");
     }

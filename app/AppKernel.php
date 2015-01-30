@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Leezy\PheanstalkBundle\LeezyPheanstalkBundle(),
             new Vivait\WorkerCommandBundle\VivaitWorkerCommandBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

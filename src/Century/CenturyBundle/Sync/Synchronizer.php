@@ -17,13 +17,14 @@ class Synchronizer implements SynchronizerInterface
      */
     public function sync(array $existing, array $data)
     {
+        //var_dump($data);
         foreach (array_merge($existing, $data) as $obj) {
             if (!$obj instanceof SynchronizableInterface) {
                 throw new UnsynchronizableException("Must implement SynchronizableInterface");
             }
         }
 
-        //Set objects to remove
+//        //Set objects to remove
         $remove = array_diff($existing, $data);
         $this->to_remove = array_values($remove);
 

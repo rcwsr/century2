@@ -2,6 +2,7 @@
 
 namespace Century\CenturyBundle\Document;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -15,7 +16,7 @@ class User implements UserInterface
     /**
      * @ODM\Id
      */
-    protected $internal_id;
+    protected $id;
 
     /**
      * @var int
@@ -23,7 +24,7 @@ class User implements UserInterface
      * @ODM\Int
      * @ODM\Index(unique=true)
      */
-    protected $id;
+    protected $stravaId;
 
     /**
      * @var string
@@ -41,7 +42,7 @@ class User implements UserInterface
      * @var string
      * @ODM\String
      */
-    protected $profile_picture;
+    protected $profilePicture;
 
     /**
      * @var string
@@ -81,7 +82,7 @@ class User implements UserInterface
 
     /**
      * @var Club[]
-     * @ODM\ReferenceMany(targetDocument="Century\CenturyBundle\Document\Club")
+     * @ODM\ReferenceMany(targetDocument="Century\CenturyBundle\Document\Club", cascade={"all"})
      */
     protected $clubs;
 
@@ -328,7 +329,7 @@ class User implements UserInterface
      */
     public function getProfilePicture()
     {
-        return $this->profile_picture;
+        return $this->profilePicture;
     }
 
     public function __toString()
@@ -336,7 +337,10 @@ class User implements UserInterface
         return $this->firstname;
     }
 
-    public function __construct(){}
+    public function __construct()
+    {
+        $this->clubs = new ArrayCollection();
+    }
 
     /**
      * Get internalId
@@ -345,7 +349,7 @@ class User implements UserInterface
      */
     public function getInternalId()
     {
-        return $this->internal_id;
+        return $this->id;
     }
 
     /**
@@ -354,7 +358,7 @@ class User implements UserInterface
      * @param int $id
      * @return self
      */
-    public function setId($id)
+    public function setStravaId($id)
     {
         $this->id = $id;
         return $this;
@@ -365,7 +369,7 @@ class User implements UserInterface
      *
      * @return int $id
      */
-    public function getId()
+    public function getStravaId()
     {
         return $this->id;
     }

@@ -43,7 +43,8 @@
         "hwi/oauth-bundle": "0.4.*@dev",
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "leezy/pheanstalk-bundle": "2.*",
-        "vivait/worker-command-bundle": "dev-master"
+        "vivait/worker-command-bundle": "dev-master",
+        "jms/serializer-bundle": "0.13.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

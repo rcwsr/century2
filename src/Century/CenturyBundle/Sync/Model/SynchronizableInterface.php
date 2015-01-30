@@ -10,9 +10,9 @@ interface SynchronizableInterface
 
     public function __toString();
 
-    public function getInternalId();
-
-    public function setInternalId($id);
-
     public function getId();
+
+    public function setId($id);
+
+    public function getStravaId();
 } 

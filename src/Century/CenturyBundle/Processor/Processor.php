@@ -29,50 +29,22 @@ class Processor implements ProcessorInterface
     /**
      * @param array $existing
      * @param array $data
-     * @return array
-     */
-    protected function sync(array $existing, array $data)
-    {
-        $data = $this->sync->sync($existing, $data);
-        return $data;
-    }
-
-    /**
-     * @param array $data
-     */
-    protected function remove(array $data)
-    {
-        foreach($data as $object){
-            $this->objectManager->remove($object);
-        }
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    protected function persist(array $data)
-    {
-        foreach($data as $object){
-            $this->objectManager->persist($object);
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param array $existing
-     * @param array $data
      * @return array $activities
      */
     public function process(array $existing, array $data)
     {
-        $data = $this->sync($existing, $data);
-        $data = $this->persist($data);
+        $synceData = $this->sync->sync($existing, $data);
 
-        $this->remove($this->sync->getTrash());
+        foreach($synceData as $object){
+            $this->objectManager->persist($object);
+        }
+
+        foreach($this->sync->getTrash() as $object){
+            $this->objectManager->remove($object);
+        }
 
         $this->objectManager->flush();
+
         return $data;
     }
 }
