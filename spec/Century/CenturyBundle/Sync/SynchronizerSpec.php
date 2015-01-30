@@ -16,24 +16,24 @@ class SynchronizerSpec extends ObjectBehavior
 
     public function let(SynchronizableInterface $modified_obj1, SynchronizableInterface $obj1, SynchronizableInterface $obj2, SynchronizableInterface $obj3, SynchronizableInterface $existing_obj1, SynchronizableInterface $existing_obj2)
     {
-        $existing_obj1->getId()->willReturn(1);
+        $existing_obj1->getStravaId()->willReturn(1);
         $existing_obj1->__toString()->willReturn('a');
-        $existing_obj1->getInternalId()->willReturn(1001);
+        $existing_obj1->getId()->willReturn(1001);
 
-        $existing_obj2->getId()->willReturn(2);
+        $existing_obj2->getStravaId()->willReturn(2);
         $existing_obj2->__toString()->willReturn('b');
-        $existing_obj2->getInternalId()->willReturn(1002);
+        $existing_obj2->getId()->willReturn(1002);
 
-        $obj1->getId()->willReturn(101);
+        $obj1->getStravaId()->willReturn(101);
         $obj1->__toString()->willReturn('z');
 
-        $obj2->getId()->willReturn(102);
+        $obj2->getStravaId()->willReturn(102);
         $obj2->__toString()->willReturn('y');
 
-        $obj3->getId()->willReturn(103);
+        $obj3->getStravaId()->willReturn(103);
         $obj3->__toString()->willReturn('x');
 
-        $modified_obj1->getId()->willReturn(1);
+        $modified_obj1->getStravaId()->willReturn(1);
         $modified_obj1->__toString()->willReturn('modified');
     }
 
@@ -56,8 +56,7 @@ class SynchronizerSpec extends ObjectBehavior
         $existing_obj1->equals($modified_obj1)->willReturn(false);
         $existing_obj2->equals(Argument::any())->willReturn(true);
 
-
-        $modified_obj1->setInternalId(1001)->shouldBeCalled();
+        $modified_obj1->setId(1001)->shouldBeCalled();
 
         $this->sync($existing,
             [$modified_obj1, $existing_obj2, $obj1, $obj2, $obj3]
